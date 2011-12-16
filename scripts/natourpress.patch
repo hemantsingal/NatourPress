@@ -1,26 +1,32 @@
-From 82ca2561b7444dcede27b448b7cbfe5f76534225 Mon Sep 17 00:00:00 2001
+From b8d8120e6ff70d7c9353dbeeac3a0fc72c83c4d9 Mon Sep 17 00:00:00 2001
 From: Hemant Singal <hemants.iitk@gmail.com>
-Date: Fri, 16 Dec 2011 13:58:11 +0530
-Subject: [PATCH] main files
+Date: Fri, 16 Dec 2011 14:55:43 +0530
+Subject: [PATCH 2/2] latest
 
 ---
- settings.py |    9 ++++++++-
+ settings.py |   18 +++++++++++++-----
  urls.py     |   10 +++++++---
- 2 files changed, 15 insertions(+), 4 deletions(-)
+ 2 files changed, 20 insertions(+), 8 deletions(-)
 
 diff --git a/settings.py b/settings.py
-index 7db2049..2ed71a2 100644
+index 5e4d3cc..2ed71a2 100644
 --- a/settings.py
 +++ b/settings.py
-@@ -11,7 +11,7 @@ MANAGERS = ADMINS
+@@ -11,10 +11,10 @@ MANAGERS = ADMINS
  
  DATABASES = {
      'default': {
 -        'ENGINE': 'django.db.backends.', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
+-        'NAME': '',                      # Or path to database file if using sqlite3.
+-        'USER': '',                      # Not used with sqlite3.
+-        'PASSWORD': '',                  # Not used with sqlite3.
 +        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-         'NAME': 'natourpress',           # Or path to database file if using sqlite3.
-         'USER': 'natourpress',           # Not used with sqlite3.
-         'PASSWORD': 'natourpress',       # Not used with sqlite3.
++        'NAME': 'natourpress',           # Or path to database file if using sqlite3.
++        'USER': 'natourpress',           # Not used with sqlite3.
++        'PASSWORD': 'natourpress',       # Not used with sqlite3.
+         'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
+         'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+     }
 @@ -29,6 +29,10 @@ DATABASES = {
  # system time zone.
  TIME_ZONE = 'America/Chicago'
@@ -48,16 +54,17 @@ index 7db2049..2ed71a2 100644
  )
  
  INSTALLED_APPS = (
-@@ -115,6 +121,7 @@ INSTALLED_APPS = (
+@@ -115,6 +121,8 @@ INSTALLED_APPS = (
      'django.contrib.sites',
      'django.contrib.messages',
      'django.contrib.staticfiles',
 +    'django.contrib.admin',
-     'natourpress',
++    'natourpress',
      # Uncomment the next line to enable the admin:
      # 'django.contrib.admin',
+     # Uncomment the next line to enable admin documentation:
 diff --git a/urls.py b/urls.py
-index 231be3c..a4b537d 100644
+index be62625..f8fa06a 100644
 --- a/urls.py
 +++ b/urls.py
 @@ -1,8 +1,8 @@
@@ -79,8 +86,8 @@ index 231be3c..a4b537d 100644
 +    url(r'^config/', include('natourpress.urls')),
 +    url(r'^admin/', include(admin.site.urls)),
 +   # url(r'^login', 'natourpress.views.my_login'),
-+    (r'^login', 'django.contrib.auth.views.login',{'template_name': 'natourpress/login.html'}),
-+    (r'^logout', 'natourpress.views.logout_view'),
++    url(r'^login', 'django.contrib.auth.views.login',{'template_name': 'natourpress/login.html'}),
++    url(r'^logout', 'natourpress.views.logout_view'),
  )
 -- 
 1.7.5.4
