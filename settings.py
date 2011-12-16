@@ -31,7 +31,7 @@ TIME_ZONE = 'America/Chicago'
 
 LOGIN_URL='/login/'
 
-LOGIN_REDIRECT_URL='/feeds/'
+LOGIN_REDIRECT_URL='/config/feeds/'
 
 # Language code for this installation. All choices can be found here:
 # http://www.i18nguy.com/unicode/language-identifiers.html
