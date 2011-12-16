@@ -19,10 +19,11 @@ $(".npTag").click(function(e){
     var nptagid = this.id;
 //    alert(authorid);
     $("#{{tagid}}").load(
-        'setnptag',
+        '/config/setnptag',
         {
             "nptagid":nptagid,
-            "tagid":{{ tagid }}
+            "tagid":{{ tagid }},
+            'csrfmiddlewaretoken': '{{ csrf_token }}'
         },
         function() {
 
@@ -34,8 +35,7 @@ $("#addTag").click(function(){
 //    disablePopup();
     $("#popupSelect").load(
         'newnptag?tagid={{ tagid }}',function() {
-         
-//            loadPopup();
+
         });
 });
 </script>

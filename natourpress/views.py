@@ -25,7 +25,7 @@ def my_login(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect('/feeds')
+                return HttpResponseRedirect('/config/feeds')
             # Redirect to a success page.
             else:
                 return HttpResponse('Not Found')
@@ -45,7 +45,7 @@ def feedList(request):
 def deleteFeed(request,feed_id):
     feed = Feed.objects.get(id=feed_id)
     feed.delete()
-    return HttpResponseRedirect('/feeds')
+    return HttpResponseRedirect('/config/feeds')
 
 
 @login_required
@@ -65,13 +65,17 @@ def postlist(request):
         postList = Post.objects.filter(feed=a).order_by('-date_modified')[:10]
         returnList = []
         for p in postList:
+            print p
             karma = a.karma
+            print a, karma
             if(p.author and p.author.np_author):
                 karma = karma + p.author.np_author.karma
+                print p.author.np_author, karma
             if(p.tags):
                 for t in p.tags.all():
                     if(t.np_tag):
                         karma = karma+t.np_tag.karma
+                        print t, t.np_tag, karma
             returnList.append((p,karma))
         postDict[a] = returnList
     return direct_to_template(request,'natourpress/posts.html', {'post_dict': postDict})
@@ -92,6 +96,8 @@ def setkarma(request):
             p = re.compile('(author|feed|tag)(\d+)')
             m = p.match(x)
             print x, y, m
+            if m == None:
+                continue
             z = m.group(1)
             if z == 'feed':
                 p = Feed.objects.get(id=m.group(2))
@@ -126,7 +132,7 @@ def newFeed(request):
             feed_url = form.cleaned_data['url']
             feed = Feed(name=name,feed_url=feed_url)
             feed.save()
-            return HttpResponseRedirect('/feeds') # Redirect after POST
+            return HttpResponseRedirect('/config/feeds') # Redirect after POST
     else:
         form = FeedForm()
 
@@ -144,7 +150,7 @@ def feedDetail(request, feed_id):
             feed.name = form.cleaned_data['name']
             feed.feed_url = form.cleaned_data['url']
             feed.save()
-            return HttpResponseRedirect('/feeds') # Redirect after POST
+            return HttpResponseRedirect('/config/feeds') # Redirect after POST
     else:
         form = FeedForm({'name':feed.name,'url':feed.feed_url})
 
@@ -160,29 +166,61 @@ def postDetail(request, post_id):
     return direct_to_template(request,'natourpress/post_details.html', {
         'post' : post,
     })
-#    return render_to_response('natourpress/feedDetail.html', {'feed': feed})
-    # if request.method == 'POST': # If the form has been submitted...
-    #     form = FeedForm(request.POST) # A form bound to the POST data
-    #     if form.is_valid(): # All validation rules pass
-    #         feed.name = form.cleaned_data['name']
-    #         feed.feed_url = form.cleaned_data['url']
-    #         feed.save()
-    #         return HttpResponseRedirect('/feeds') # Redirect after POST
-    # else:
-    #     form = FeedForm({'name':feed.name,'url':feed.feed_url})
-
-    # return direct_to_template(request,'natourpress/feedDetail.html', {
-    #     'form': form,
-    #     'feed_id':feed_id,
-    # })
 
 @login_required
 def npauthorlist(request):
+    print "hi"
     authorid = request.POST.get('authorid','')
+    print authorid
     npauthorList = NPAuthor.objects.all()
-    return render_to_response('natourpress/npauthor.html', {
+    return direct_to_template(request,'natourpress/npauthor.html', {
         'author_list': npauthorList,
         'authorid': authorid,
+    })
+
+@login_required
+def newnpauthor(request):
+    if request.method == 'POST': # If the form has been submitted...
+        form = NPAuthorForm(request.POST) # A form bound to the POST data
+        if form.is_valid(): # All validation rules pass
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            email = form.cleaned_data['email']
+            author = NPAuthor(first_name=first_name,last_name=last_name,author_email=email)
+            author.save()
+            return HttpResponse("done") # Redirect after POST
+    else:
+        form = NPAuthorForm() # An unbound form
+        authorid = request.GET.get('authid','')
+    return direct_to_template(request,'natourpress/npauthorform.html', {
+        'form': form,
+        'authorid':authorid,
+    })
+
+@login_required
+def nptaglist(request):
+    tagid = request.POST.get('tagid','')
+    nptagList = NPTag.objects.all()
+    return direct_to_template(request,'natourpress/nptag.html', {
+        'tag_list': nptagList, 
+        'tagid': tagid
+    })
+
+@login_required
+def newnptag(request):
+    if request.method == 'POST':
+        form = NPTagForm(request.POST)
+        if form.is_valid():
+            name = form.cleaned_data['name']
+            slug = form.cleaned_data['slug']
+            tag = NPTag(name=name,slug=slug)
+            tag.save()
+            return HTTPResponse("done")
+    else:
+        form = NPTagForm()
+        tagid = request.GET.get('tagid','')
+    return direct_to_template(request,'natourpress/nptagform.html', {
+        'form': form,'tagid':tagid,
     })
 
 def setnpauthor(request):
@@ -197,13 +235,7 @@ def setnpauthor(request):
             """.format(a,b,int(a.id)))
 
 
-def nptaglist(request):
-    tagid = request.POST.get('tagid','')
-    nptagList = NPTag.objects.all()
-    return render_to_response('natourpress/nptag.html', {
-        'tag_list': nptagList, 
-        'tagid': tagid
-    })
+
 
 def setnptag(request):
     tagid = request.POST.get('tagid','')
@@ -216,56 +248,14 @@ def setnptag(request):
             tagid={!r} href="#">(change)</a></li>
             """.format(a,b,int(a.id)))
 
-
-
-
-
-
-
-
-
 class NPAuthorForm(forms.Form):
     first_name = forms.CharField(max_length=100)
     last_name = forms.CharField(max_length=100)
     email = forms.EmailField()
 
-def newnpauthor(request):
-    if request.method == 'POST': # If the form has been submitted...
-        form = NPAuthorForm(request.POST) # A form bound to the POST data
-        if form.is_valid(): # All validation rules pass
-            first_name = form.cleaned_data['first_name']
-            last_name = form.cleaned_data['last_name']
-            email = form.cleaned_data['email']
-            author = NPAuthor(first_name=first_name,last_name=last_name,author_email=email)
-            author.save()
-            return HttpResponse("done") # Redirect after POST
-    else:
-        form = NPAuthorForm() # An unbound form
-        authorid = request.GET.get('authid','')
-    return render_to_response('natourpress/npauthorform.html', {
-        'form': form,
-        'authorid':authorid,
-    })
+
 
 class NPTagForm(forms.Form):
     name = forms.CharField(max_length=100)
     slug = forms.CharField(max_length=100)
-
-def newnptag(request):
-    if request.method == 'POST':
-        form = NPTagForm(request.POST)
-        if form.is_valid():
-            name = form.cleaned_data['name']
-            slug = form.cleaned_data['slug']
-            tag = NPTag(name=name,slug=slug)
-            tag.save()
-            return HTTPResponse("done")
-    else:
-        form = NPTagForm()
-        tagid = request.GET.get('tagid','')
-    return render_to_response('natourpress/nptagform.html', {
-        'form': form,'tagid':tagid,
-    })
-
-
 

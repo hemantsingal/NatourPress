@@ -6,12 +6,12 @@
     <table>
     {% for feed in feed_list %}
     <tr class={% cycle 'row1' 'row2' %}>    
-    <td><a href="/feed_detail/{{ feed.id}}">{{ feed.name }}</a></td><td> {{feed.feed_url}}
-    </td><td>	<a href="/delete_feed/{{ feed.id }}">delete</a></td></tr>
+    <td><a href="/config/feed_detail/{{ feed.id}}">{{ feed.name }}</a></td><td> {{feed.feed_url}}
+    </td><td>	<a href="/config/delete_feed/{{ feed.id }}">delete</a></td></tr>
     
     {% endfor%}
     </table>
-    <p class="paginator"><a href="/addfeed">Add New Blog</a></p>
+    <p class="paginator"><a href="/config/addfeed">Add New Blog</a></p>
 
 {% else %}
     <p>No feeds are available.</p>

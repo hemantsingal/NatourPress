@@ -10,7 +10,7 @@
     {% endfor %}
     </ul>
 {% else %}
-    <p>No polls are available.</p>
+    <p>No authors found.</p>
 {% endif %}
 
 <a id="addAuthor" href="#">Add an author</a>
@@ -19,21 +19,22 @@ $(".npAuthor").click(function(e){
     var npauthorid = this.id;
 //    alert(authorid);
     $("#{{authorid}}").load(
-        'setnpauthor',
+        '/config/setnpauthor',
         {
             "npauthorid":npauthorid,
-            "authorid":{{ authorid }}
+            "authorid":{{ authorid }},
+            'csrfmiddlewaretoken': '{{ csrf_token }}'
         },
         function() {
-
             disablePopup();
     });
 });
+
 $("#addAuthor").click(function(){
 //    alert("hi");
 //    disablePopup();
     $("#popupSelect").load(
-        'newnpauthor?authid={{ authorid }}',function() {
+        '/config/newnpauthor?authid={{ authorid }}',function() {
          
 //            loadPopup();
         });

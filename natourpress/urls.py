@@ -29,4 +29,6 @@ urlpatterns = patterns('',
    # url(r'^login', 'natourpress.views.my_login'),
     (r'^login', 'django.contrib.auth.views.login',{'template_name': 'natourpress/login.html'}),
     (r'^logout', 'natourpress.views.logout_view'),
+    (r'^posts', 'natourpress.views.postlist'),
+    (r'^post_detail/(?P<post_id>\d+)/$', 'natourpress.views.postDetail'),
 )

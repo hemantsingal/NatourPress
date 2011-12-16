@@ -1,4 +1,4 @@
-<form action="/newnpauthor/" method="post">
+<form action="/config/newnpauthor/" method="post">
 {{ form.as_p }}
 <input id="formSubmit" type="button" value="Submit" />
 <script>
@@ -6,16 +6,20 @@ $("#formSubmit").click(function(){
 //    alert("hi");
 //    disablePopup();
     $("#status").load(
-        'newnpauthor',
+        '/config/newnpauthor',
         {
         	first_name:$("#id_first_name").val(),
         	last_name:$("#id_last_name").val(),
-        	email:$("#id_email").val()
+        	email:$("#id_email").val(),
+            'csrfmiddlewaretoken': '{{ csrf_token }}'
         },
         function() {
             $("#popupSelect").load(
        			 'npauthor',
-        		{"authorid":{{ authorid }}}
+        		{
+                    "authorid":{{ authorid }},
+                    'csrfmiddlewaretoken': '{{ csrf_token }}'
+                }
         	);
         });
 });

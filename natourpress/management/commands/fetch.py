@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from django.core.management.base import BaseCommand
-from natourpress.models import Feed, Atom, Update, FeedImage, Tag, Post, Media, Link
+from natourpress.models import Feed, Atom, Update, FeedImage, Tag, Post, Media, Link, Author, NPAuthor, NPTag
 import feedparser, time, datetime
 import socket
 
@@ -35,11 +35,26 @@ class SaveEntry:
                     tagname = tagname.strip()
                     if not tagname or tagname == ' ':
                         continue
-                    if not Tag.objects.filter(name=tagname):
-                        cobj = Tag(name=tagname)
+                    if not Tag.objects.filter(name=tagname).filter(feed=self.feed):
+                        cobj = Tag(name=tagname,feed=self.feed)
                         cobj.save()
                     fcat.append(Tag.objects.get(name=tagname))
         return fcat
+    
+    def get_author(self):
+	if self.entry.has_key('author_detail'):
+            author_name = self.entry.author_detail.get('name', '')
+            author_email = self.entry.author_detail.get('email', '')
+        else:
+            author_name, author_email = '', ''
+
+        if not author_name:
+            author_name = self.entry.get('author', self.entry.get('creator', ''))
+        if author_name != '' and not Author.objects.filter(name =author_name):
+            sobj = Author(name=author_name,email=author_email,feed=self.feed)
+            sobj.save()
+            return sobj
+        return None
 
     def get_entry_data(self):
         """ Retrieves data from a post and returns it in a tuple.
@@ -54,15 +69,7 @@ class SaveEntry:
             title = link
         guid = self.entry.get('id', title)
 
-        if self.entry.has_key('author_detail'):
-            author = self.entry.author_detail.get('name', '')
-            author_email = self.entry.author_detail.get('email', '')
-        else:
-            author, author_email = '', ''
-
-        if not author:
-            author = self.entry.get('author', self.entry.get('creator', ''))
-        
+        author = self.get_author()        
         try:
             content = self.entry.content[0].value
         except:
@@ -77,16 +84,25 @@ class SaveEntry:
         fcat = self.get_tags()
         comments = self.entry.get('comments', '')
         description = self.entry.get('description','')
-
-        return (link, title, guid, author, author_email, content, 
-                date_modified, fcat, comments,description[0:250])
+        karma = self.feed.karma
+        print self.feed, karma
+        if(author and author.np_author):
+                karma = karma + author.np_author.karma
+                print author.np_author, author.np_author.karma
+        if(fcat):
+            for tcat in fcat:
+                if(tcat.np_tag):
+                    karma = karma+tcat.np_tag.karma
+                    print tcat.np_tag, tcat.np_tag.karma
+        return (link, title, guid, author, content, 
+                date_modified, fcat, comments,description[0:250],karma)
 
     def savePost(self):
         """ Process a post in a feed and saves it in the DB if necessary.
         """
 
-        (link, title, guid, author, author_email, content, date_modified,
-         fcat, comments,description) = self.get_entry_data()
+        (link, title, guid, author, content, date_modified,
+         fcat, comments,description,karma) = self.get_entry_data()
         
         if guid in self.postdict:
             tobj = self.postdict[guid]
@@ -100,9 +116,9 @@ class SaveEntry:
                 tobj.guid = guid
                 tobj.date_modified = date_modified
                 tobj.author = author
-                tobj.author_email = author_email
                 tobj.comments = comments
                 tobj.description = description
+                tobj.karma = karma
                 tobj.tags.clear()
                 [tobj.tags.add(tcat) for tcat in fcat]
                 tobj.save()
@@ -118,8 +134,7 @@ class SaveEntry:
                     date_modified = datetime.datetime.now()
             tobj = Post(feed=self.feed, title=title, link=link,
                 content=content, guid=guid, date_modified=date_modified,
-                author=author, author_email=author_email,
-                comments=comments, description=description)
+                author=author, comments=comments, description=description,karma=karma)
             tobj.save()
             [tobj.tags.add(tcat) for tcat in fcat]
             

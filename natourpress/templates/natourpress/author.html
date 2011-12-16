@@ -66,13 +66,17 @@ $(document).on("click", "a.selectNP", function(e){
     var authorid = $(this).attr('authid');
 //    alert(authorid);
     $("#popupSelect").load(
-        'npauthor',
-        {"authorid":authorid},
+        '/config/npauthor',
+        {
+            "authorid":authorid,
+            'csrfmiddlewaretoken': '{{ csrf_token }}'
+        },
         function() {
             centerPopup(e);
             loadPopup();
     });
 }); 
+
 </script>
 {%endblock%}
 {%block headline%}Authors{%endblock%}

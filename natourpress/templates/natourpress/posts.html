@@ -64,7 +64,7 @@ $(document).keypress(function(e){
 
 $(document).on("click", "a.openPost", function(e){
     var postid = $(this).attr('postid');
-    var action = 'post_detail/'+postid;
+    var action = '/config/post_detail/'+postid;
 //    alert(authorid);
     $("#postSelect").load(
         action,

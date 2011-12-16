@@ -64,7 +64,6 @@ class Author(models.Model):
     email = models.EmailField(_('email'), blank=True)
     np_author = models.ForeignKey(NPAuthor, verbose_name=_('np_author'), null=True, blank=True)
     feed = models.ForeignKey(Feed, verbose_name=_('feed'), null=False, blank=False)
-
     def __unicode__(self):
         return self.name
 
@@ -81,6 +80,7 @@ class Post(models.Model):
     tags = models.ManyToManyField(Tag, verbose_name=_('tags'))
     pub_date = models.DateField(_('pub_date'), auto_now_add=True)
     description = models.CharField(_('description'), max_length=250)
+    karma = models.IntegerField(_('karma'), blank=False, null=False)
     def __unicode__(self):
         return self.title
 

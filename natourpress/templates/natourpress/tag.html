@@ -49,17 +49,6 @@ function disablePopup(){
 
 $(document).ready(function() {
 
-//$(".selectNP").click(function(e){
-//    var authorid = $(this).attr('authid');
-//    $("#popupSelect").load(
-//        'npauthor',
-//        {"authorid":authorid},
-//        function() {
-//            centerPopup(e);
-//            loadPopup();
-//    });
-//});
-
 $("#backgroundPopup").click(function(){
         disablePopup();
     });
@@ -77,8 +66,11 @@ $(document).on("click", "a.selectNP", function(e){
     var tagid = $(this).attr('tagid');
 //    alert(authorid);
     $("#popupSelect").load(
-        'nptag',
-        {"tagid":tagid},
+        '/config/nptag',
+        {
+            "tagid":tagid,
+            'csrfmiddlewaretoken': '{{ csrf_token }}'
+        },
         function() {
             centerPopup(e);
             loadPopup();

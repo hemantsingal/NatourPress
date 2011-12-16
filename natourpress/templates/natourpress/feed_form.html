@@ -2,7 +2,7 @@
 {%block title%}Blog List{% endblock %}
 {%block headline%}Add Blog{%endblock%}
 {%block main%}
-<form action="/addfeed/" method="post">
+<form action="/config/addfeed/" method="post">{% csrf_token %}
 {{ form.as_p }}
 <input type="submit" value="Submit" />
 </form>

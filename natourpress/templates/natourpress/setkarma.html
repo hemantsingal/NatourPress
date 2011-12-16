@@ -15,7 +15,7 @@ $(document).ready(function() {
 {%endblock%}
 {%block headline%}Karma{%endblock%}
 {%block main%}
-<form action="/setkarma/" method="POST">
+<form action="/config/setkarma/" method="POST">{% csrf_token %}
 <table border="1" cellpadding="5" width="100%" ><tr><td width="30%">
 {% if feed_list %}
     <table padding="4">

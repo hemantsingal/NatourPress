@@ -6,7 +6,7 @@
 {%endblock%}
 {%block headline%}Edit Blog{%endblock%}
 {%block main%}
-<form action="/feed_detail/{{ feed_id }}/" method="post">
+<form action="/config/feed_detail/{{ feed_id }}/" method="post">{% csrf_token %}
 {{ form.as_p }}
 <input type="submit" value="Submit" />
 </form>
