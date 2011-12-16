@@ -1,0 +1,43 @@
+<html><head>
+</head>
+<body>
+{% if author_list %}
+    <ul>
+    {% for author in author_list %}
+	
+        <li class="npAuthor" id="{{ author.id }}">{{ author.first_name }} {{author.last_name}} </li>
+        
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
+
+<a id="addAuthor" href="#">Add an author</a>
+<script type="text/javascript">
+$(".npAuthor").click(function(e){
+    var npauthorid = this.id;
+//    alert(authorid);
+    $("#{{authorid}}").load(
+        'setnpauthor',
+        {
+            "npauthorid":npauthorid,
+            "authorid":{{ authorid }}
+        },
+        function() {
+
+            disablePopup();
+    });
+});
+$("#addAuthor").click(function(){
+//    alert("hi");
+//    disablePopup();
+    $("#popupSelect").load(
+        'newnpauthor?authid={{ authorid }}',function() {
+         
+//            loadPopup();
+        });
+});
+</script>
+
+</body></html>

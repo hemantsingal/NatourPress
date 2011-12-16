@@ -1,0 +1,12 @@
+<div id="branding"><h1><a href="/config/feeds">Blogs</a> | <a href="/config/author">Authors</a> | 
+<a href="/config/tags">Categories</a> | 
+<a href="/config/setkarma">Karma</a> | <a href="/config/posts">Posts</a> | <a href="#">Layout</a> | 
+<a href="#">Page mapper</a></h1></div> <div id="user-tools">{% block user %} 
+            {% if user.is_authenticated %} 
+                Welcome, <b>{{ user.username }}</b>.
+                <a href="/logout">Log out</a> 
+            {% else %} 
+                <a href="#?next={% url track- 
+root %}">Log in</a> 
+            {% endif %} 
+            {% endblock user %} </div>

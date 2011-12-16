@@ -1,0 +1,19 @@
+{% extends "natourpress/base.html" %}
+{%block title%}Blog List{% endblock %}
+{%block headline%}Blogs{%endblock%}
+{%block main%}
+{% if feed_list %}
+    <table>
+    {% for feed in feed_list %}
+    <tr class={% cycle 'row1' 'row2' %}>    
+    <td><a href="/feed_detail/{{ feed.id}}">{{ feed.name }}</a></td><td> {{feed.feed_url}}
+    </td><td>	<a href="/delete_feed/{{ feed.id }}">delete</a></td></tr>
+    
+    {% endfor%}
+    </table>
+    <p class="paginator"><a href="/addfeed">Add New Blog</a></p>
+
+{% else %}
+    <p>No feeds are available.</p>
+{% endif %}
+{% endblock %}

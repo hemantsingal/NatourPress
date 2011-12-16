@@ -1,0 +1,23 @@
+<form action="/newnpauthor/" method="post">
+{{ form.as_p }}
+<input id="formSubmit" type="button" value="Submit" />
+<script>
+$("#formSubmit").click(function(){
+//    alert("hi");
+//    disablePopup();
+    $("#status").load(
+        'newnpauthor',
+        {
+        	first_name:$("#id_first_name").val(),
+        	last_name:$("#id_last_name").val(),
+        	email:$("#id_email").val()
+        },
+        function() {
+            $("#popupSelect").load(
+       			 'npauthor',
+        		{"authorid":{{ authorid }}}
+        	);
+        });
+});
+</script>
+</form>

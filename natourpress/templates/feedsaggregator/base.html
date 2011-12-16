@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>{% block title %}News Aggregation{% endblock %}</title>
+<link href="/static/feedsaggregator/css/style.css" rel="stylesheet" type="text/css" />
+<script src="/static/feedsaggregator/js/jquery.js" type="text/javascript"></script>
+<script src="/static/feedsaggregator/js/general.js" type="text/javascript"></script>
+</head>
+
+<body>
+<!--[if !IE]>Main Container<![endif]-->
+    <div id="Wraper">
+    	<!--[if !IE]>Header<![endif]-->
+	 		<div id="Header" class="z-index25">
+            	<div class="FloatLeft">
+	                <div class="Logo"><a href="#"><img src="/static/feedsaggregator/images/logo1.png" width="95" height="39" /></a></div>
+    			</div>
+                {% include "feedsaggregator/place.html" %}
+                <div class="Clear"></div>
+                
+             
+            </div>
+    	<!--[if !IE]>Header<![endif]-->
+        
+        <!--[if !IE]>Main Page Content<![endif]-->
+        {% include "feedsaggregator/category.html" %}
+        {% include "feedsaggregator/content.html" %}
+            
+            <div class="Clear"></div>
+			<div class="End"><img src="/static/feedsaggregator/images/spacer.gif" width="1" height="1" /></div>
+            <div class="Clear"></div>
+            
+        </div>
+        <!--[if !IE]>Main Page Content<![endif]-->        
+        <div class="Clear"></div>
+                {% include "feedsaggregator/footer.html" %}
+        
+        <div class="Clear"></div>
+    </div>
+<!--[if !IE]>Main Container<![endif]-->
+    
+</body>
+</html>

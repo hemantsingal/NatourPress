@@ -2,19 +2,19 @@
 // Install MySql
 
 # sudo apt-get install mysql-server mysql-client libmysqlclient-dev
-# curl https://raw.github.com/naturaltouring/NatourPress/master/scripts/natourpress.sql | mysql --user=root -p
+# curl https://raw.github.com/hemantsingal/NatourPress/master/scripts/natourpress.sql | mysql --user=root -p
 
 
 // Install Django
 
 # virtualenv --no-site-packages /home/environments/natourpress
-# /home/environments/natourpress/bin/pip install -r https://raw.github.com/naturaltouring/NatourPress/master/doc/requirements.txt
+# /home/environments/natourpress/bin/pip install -r https://raw.github.com/hemantsingal/NatourPress/master/doc/requirements.txt
 
 
 // Create a Django project
 
 # cd /var/www; /home/environments/natourpress/bin/django-admin.py startproject NatourPress
-# cd /var/www; curl https://raw.github.com/naturaltouring/NatourPress/master/scripts/natourpress.patch | patch -p1
+# cd /var/www; curl https://raw.github.com/hemantsingal/NatourPress/master/scripts/natourpress.patch | patch -p1
 # cd /var/www/NatourPress; /home/environments/natourpress/bin/python manage.py syncdb
 
 

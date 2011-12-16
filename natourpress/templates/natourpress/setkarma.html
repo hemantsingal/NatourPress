@@ -1,0 +1,63 @@
+{% extends "natourpress/base.html" %}
+{%block title%}Karma{% endblock %}
+{%block extrahead%}
+<script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $(".editlink").click(function() {
+        var varid = $(this).attr('varid');
+        var x = $("#"+varid).text();
+        x = x.replace(/\s+/,"");
+        $("#"+varid).html("<input name=\""+varid+"\" type=\"text\" value=\""+x+"\"/>");
+    });
+});
+</script>
+{%endblock%}
+{%block headline%}Karma{%endblock%}
+{%block main%}
+<form action="/setkarma/" method="POST">
+<table border="1" cellpadding="5" width="100%" ><tr><td width="30%">
+{% if feed_list %}
+    <table padding="4">
+    
+    {% for feed in feed_list %}
+    <tr><td>{{ feed.name }}</td><td id="feed{{ feed.id }}">{{ feed.karma }}</td><td>
+    <a class="editlink" href="#" varid="feed{{ feed.id }}">edit</a></td></tr>
+    
+    {% endfor%}
+    </table>
+
+{% else %}
+    <p>No feeds are available.</p>
+{% endif %}
+</td>
+<td width="30%">
+{% if author_list %}
+    <table>
+    {% for author in author_list %}
+    <tr><td>{{ author.first_name }} {{ author.last_name}} </td>
+    <td id="author{{author.id}}">{{author.karma}}</td><td> <a class="editlink" href="#" varid="author{{author.id}}"/>edit</a></td></tr>
+    
+    {% endfor%}
+    </table>
+{% else %}
+    <p>No authors are available.</p>
+{% endif %}
+</td>
+<td width="30%">
+{% if tag_list %}
+    <table>
+    {% for tag in tag_list %}
+    <tr><td>{{ tag.name }} </td><td id="tag{{ tag.id }}">{{tag.karma}}</td><td> 
+    <a class="editlink" href="#" varid="tag{{ tag.id }}">edit</a></td></tr>
+    
+    {% endfor%}
+    </table>
+{% else %}
+    <p>No categories are available.</p>
+{% endif %}
+</td>
+</tr></table>
+<input type="submit" value="save"/>
+</form>
+{%endblock%}

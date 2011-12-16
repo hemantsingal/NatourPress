@@ -1,0 +1,43 @@
+<html><head>
+</head>
+<body>
+{% if tag_list %}
+    <ul>
+    {% for tag in tag_list %}
+	
+        <li class="npTag" id="{{ tag.id }}">{{ tag.name }}  </li>
+        
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
+
+<a id="addTag" href="#">Add a category</a>
+<script type="text/javascript">
+$(".npTag").click(function(e){
+    var nptagid = this.id;
+//    alert(authorid);
+    $("#{{tagid}}").load(
+        'setnptag',
+        {
+            "nptagid":nptagid,
+            "tagid":{{ tagid }}
+        },
+        function() {
+
+            disablePopup();
+    });
+});
+$("#addTag").click(function(){
+//    alert("hi");
+//    disablePopup();
+    $("#popupSelect").load(
+        'newnptag?tagid={{ tagid }}',function() {
+         
+//            loadPopup();
+        });
+});
+</script>
+
+</body></html>

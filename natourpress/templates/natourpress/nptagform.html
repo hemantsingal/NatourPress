@@ -1,0 +1,22 @@
+<form action="/newnptag/" method="post">
+{{ form.as_p }}
+<input id="formSubmit" type="button" value="Submit" />
+<script>
+$("#formSubmit").click(function(){
+//    alert("hi");
+//    disablePopup();
+    $("#status").load(
+        'newnptag',
+        {
+        	name:$("#id_name").val(),
+        	slug:$("#id_slug").val(),
+        },
+        function() {
+            $("#popupSelect").load(
+       			 'nptag',
+        		{"tagid":{{ tagid }}}
+        	);
+        });
+});
+</script>
+</form>

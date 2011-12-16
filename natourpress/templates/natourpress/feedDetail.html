@@ -1,0 +1,13 @@
+{% extends "natourpress/base.html" %}
+
+{%block title%}Blog List{% endblock %}
+{%block extrahead%}
+<link rel="stylesheet" type="text/css" href="/static/css/forms.css" />
+{%endblock%}
+{%block headline%}Edit Blog{%endblock%}
+{%block main%}
+<form action="/feed_detail/{{ feed_id }}/" method="post">
+{{ form.as_p }}
+<input type="submit" value="Submit" />
+</form>
+{%endblock%}

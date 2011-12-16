@@ -1,0 +1,11 @@
+{% if post %}
+<table>
+<tr id="title"><td>Title</td><td> {{post.title}} </td></tr>
+<tr><td>Description</td><td> {{post.description}} </td></tr>
+<tr><td>Author</td><td> {{post.author}}</td></tr>
+<tr><td>Categories</td><td></td></tr>
+<tr><td>Body</td><td>{{post.content}}</td></tr>
+<tr><td>Date</td><td>{{post.date_modified}}</td></tr>
+{% else %}
+Unable to fetch post details
+{% endif %}

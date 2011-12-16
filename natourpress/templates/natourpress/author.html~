@@ -1,0 +1,16 @@
+{% if author_dict %}
+    <ul>
+    {% for feed,authorList in author_dict.items %}
+	<h2>{{ feed.name }}</h2>
+        {% for author in authorList %}
+	{% if author.np_author %}
+        <li>{{ author.name }}  |  {{author.np_author}} </li>
+        {% else %}
+        <li>{{ author.name }}</li>
+        {% endif %}
+	{% endfor %}
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}

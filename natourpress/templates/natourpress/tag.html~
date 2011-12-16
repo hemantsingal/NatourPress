@@ -1,0 +1,12 @@
+{% if tag_dict %}
+    <ul>
+    {% for feed,tagList in tag_dict.items %}
+	<h2>{{ feed.name }}</h2>
+        {% for tag in tagList %}
+        <li>{{ tag.name }}</li>
+	{% endfor %}
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
