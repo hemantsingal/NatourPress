@@ -1,6 +1,7 @@
 <html><head>
 </head>
 <body>
+{{authorid}}
 {% if author_list %}
     <ul>
     {% for author in author_list %}
@@ -33,7 +34,7 @@ $(".npAuthor").click(function(e){
 $("#addAuthor").click(function(){
 //    alert("hi");
 //    disablePopup();
-    $("#popupSelect").load(
+    $("#popup_id").load(
         '/config/newnpauthor?authid={{ authorid }}',function() {
          
 //            loadPopup();

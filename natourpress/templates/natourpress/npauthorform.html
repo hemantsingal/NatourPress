@@ -14,8 +14,8 @@ $("#formSubmit").click(function(){
             'csrfmiddlewaretoken': '{{ csrf_token }}'
         },
         function() {
-            $("#popupSelect").load(
-       			 'npauthor',
+            $("#popup_id").load(
+       			 '/config/npauthor',
         		{
                     "authorid":{{ authorid }},
                     'csrfmiddlewaretoken': '{{ csrf_token }}'

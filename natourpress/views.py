@@ -13,6 +13,10 @@ class FeedForm(forms.Form):
     name = forms.CharField(max_length=100)
     url = forms.URLField()
 
+class PostForm(forms.ModelForm):
+    class Meta:
+        model = Post
+
 def logout_view(request):
     logout(request)
     return HttpResponseRedirect('/login')
@@ -57,28 +61,6 @@ def authorlist(request):
         authorDict[a] = authorList
     return direct_to_template(request,'natourpress/author.html', {'author_dict': authorDict})
 
-@login_required
-def postlist(request):
-    postDict = {}
-    feedList = Feed.objects.all()
-    for a in feedList:
-        postList = Post.objects.filter(feed=a).order_by('-date_modified')[:10]
-        returnList = []
-        for p in postList:
-            print p
-            karma = a.karma
-            print a, karma
-            if(p.author and p.author.np_author):
-                karma = karma + p.author.np_author.karma
-                print p.author.np_author, karma
-            if(p.tags):
-                for t in p.tags.all():
-                    if(t.np_tag):
-                        karma = karma+t.np_tag.karma
-                        print t, t.np_tag, karma
-            returnList.append((p,karma))
-        postDict[a] = returnList
-    return direct_to_template(request,'natourpress/posts.html', {'post_dict': postDict})
 
 @login_required
 def taglist(request):
@@ -162,10 +144,53 @@ def feedDetail(request, feed_id):
 @login_required
 def postDetail(request, post_id):
     post = Post.objects.get(id=post_id)
-    print post
-    return direct_to_template(request,'natourpress/post_details.html', {
-        'post' : post,
-    })
+ #   print form
+    params = {
+        'post':post,
+    }
+    if post.author and post.author.np_author:
+        params['np_author'] = post.author.np_author
+    return direct_to_template(request,'natourpress/post_details.html', params)
+
+@login_required
+def openKarma(request, post_id):
+    post = Post.objects.get(id=post_id)
+    #form = PostForm(instance=post)
+ #   print form
+    params = {
+     #   'form':form,
+        'karma':post.karma,
+    }
+
+    #if post.author and post.author.np_author:
+    #    params['np_author'] = post.author.np_author
+    return direct_to_template(request,'natourpress/karma.html', params)
+
+@login_required
+def postlist(request):
+    if request.method == 'POST':
+        for x,y in request.POST.items():
+            if (x == 'title'):
+                title = y
+            if (x == 'description'):
+                description =  y
+        #        print len(y)
+            if (x == 'msgpost'):
+                content = y
+            if (x == 'postid'):
+                post = Post.objects.get(id=y)
+        if post:
+            print post
+            post.title = title
+            post.description = description
+            post.content = content
+            post.save()
+    postDict = {}
+    feedList = Feed.objects.all()
+    for a in feedList:
+        postList = Post.objects.filter(feed=a).order_by('-date_modified')[:10]
+        postDict[a] = postList
+    return direct_to_template(request,'natourpress/posts.html', {'post_dict': postDict})
 
 @login_required
 def npauthorlist(request):
@@ -234,8 +259,8 @@ def setnpauthor(request):
             authid={!r} href="#">(change)</a></li>
             """.format(a,b,int(a.id)))
 
-
-
+def main(request):
+    return render_to_response("natourpress/test.html")
 
 def setnptag(request):
     tagid = request.POST.get('tagid','')

@@ -15,6 +15,8 @@
 
 # cd /var/www; /home/environments/natourpress/bin/django-admin.py startproject NatourPress
 # cd /var/www/NatourPress; curl https://raw.github.com/hemantsingal/NatourPress/master/scripts/natourpress.patch | patch -p1
+
+//With the following step you should create an admin user
 # cd /var/www/NatourPress; /home/environments/natourpress/bin/python manage.py syncdb
 
 

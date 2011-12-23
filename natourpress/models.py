@@ -79,11 +79,16 @@ class Post(models.Model):
     comments = models.URLField(_('comments'), blank=True)
     tags = models.ManyToManyField(Tag, verbose_name=_('tags'))
     pub_date = models.DateField(_('pub_date'), auto_now_add=True)
-    description = models.CharField(_('description'), max_length=250)
+    description = models.CharField(_('description'), max_length=350)
     karma = models.IntegerField(_('karma'), blank=False, null=False)
     def __unicode__(self):
         return self.title
 
+class Karma_Log(models.Model):
+    oldkarma = models.IntegerField(_('karma'), blank=False, null=False)
+    newkarma = models.IntegerField(_('karma'), blank=False, null=False)
+    date = models.DateTimeField(_('date'), null=False, blank=False)
+    post = models.ForeignKey(Post, verbose_name=_('post'), null=False, blank=False, db_index=True)
 
 class Media(models.Model):
     post = models.ForeignKey(Post, verbose_name=_('feed'), null=False, blank=False)

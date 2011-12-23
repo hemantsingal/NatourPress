@@ -31,4 +31,6 @@ urlpatterns = patterns('',
     (r'^logout', 'natourpress.views.logout_view'),
     (r'^posts', 'natourpress.views.postlist'),
     (r'^post_detail/(?P<post_id>\d+)/$', 'natourpress.views.postDetail'),
+    (r'^main/$', 'natourpress.views.main'),
+    (r'^open_karma/(?P<post_id>\d+)/$', 'natourpress.views.openKarma'),
 )

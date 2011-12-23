@@ -1,0 +1,15 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
+    <html lang="en">
+    <head>
+        <title>{% block title %}{% endblock %}</title>
+        {% block extrahead %}{% endblock %}
+    </head>
+    <body>
+		<div id="content">
+        <h1 id="top">{% block headline %}{% endblock %}</h1>
+        {% block subtext %}{% endblock %}
+        {% block main %}{% endblock %}
+        </div>
+        <hr>
+    </body>
+    </html>

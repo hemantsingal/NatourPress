@@ -1,11 +1,67 @@
+{% extends "natourpress/base1.html" %}
+{%block title%}Posts List{% endblock %}
+{%block extrahead%}
+<!-- Skin CSS file -->
+
+<script type="text/javascript">
+tinyMCE.init({
+		// General options
+		mode : "textareas",
+		theme : "advanced",
+		plugins : 'inlinepopups,emotions',
+		// Theme options
+		theme_advanced_buttons1 : "bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,formatselect,fontselect,fontsizeselect,|,bullist,numlist,|,undo,redo,|,emotions",
+		theme_advanced_buttons2 : "",
+		theme_advanced_buttons3 : "",
+		theme_advanced_toolbar_location : "top",
+		theme_advanced_toolbar_align : "left",
+		editor_selector : "description",
+		height : "20"
+	});
+
+tinyMCE.init({
+		// General options
+		mode : "textareas",
+		theme : "advanced",
+		plugins : 'inlinepopups,emotions',
+		// Theme options
+		theme_advanced_buttons1 : "bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,formatselect,fontselect,fontsizeselect,|,bullist,numlist,|,undo,redo,|,emotions",
+		theme_advanced_buttons2 : "",
+		theme_advanced_buttons3 : "",
+		theme_advanced_toolbar_location : "top",
+		theme_advanced_toolbar_align : "left",
+		editor_selector : "content",
+		height : "400"
+});
+</script>
+{%endblock%}
 {% if post %}
+{%block headline%}{{post.feed}}{%endblock%}
+{%block main%}
+<form action="/config/posts/" method="post">{% csrf_token %}
+<input type="hidden" value="{{ post.id }}" name="postid"/>
 <table>
-<tr id="title"><td>Title</td><td> {{post.title}} </td></tr>
-<tr><td>Description</td><td> {{post.description}} </td></tr>
-<tr><td>Author</td><td> {{post.author}}</td></tr>
-<tr><td>Categories</td><td></td></tr>
-<tr><td>Body</td><td>{{post.content}}</td></tr>
+<tr id="title_tag"><td>Title</td><td><input size="100" stype="text" 
+	name="title" id="id_title" value="{{post.title}}"/></td></tr>
+<tr><td>Description</td><td><textarea name="description" style="width:100%" id="id_description" class="description"> {{post.description}}</textarea></td></tr>
+<tr><td>Author</td><td> {{post.author}} {% if post.author %}
+	|{% if np_author %} 
+	{{ np_author }} <a class="selectNP" authid="{{ post.author.id }}" href="#">(change)</a>
+	{% else %}
+	<a class="selectNP" authid="{{ post.author.id }}" 
+            href="#">select</a>
+	{% endif %}
+{% endif %}
+</td></tr>
+<tr><td>Categories</td><td>{% for tag in post.tags.all %}
+{{tag}} | {% endfor %}</td></tr>
+<tr><td>Body</td><td><textarea name="msgpost" id="msgpost" style="width:100%" class="content">{{post.content}}</textarea></td></tr> 
 <tr><td>Date</td><td>{{post.date_modified}}</td></tr>
+</table>
+<input type="submit" value="Save" />	<input type="button" value="cancel" onclick="disablePopup();"/>
+</form>
+{% endblock %}
 {% else %}
 Unable to fetch post details
 {% endif %}
+

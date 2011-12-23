@@ -12,7 +12,7 @@ function loadPopup(){
             "opacity": "0.7"
         });
         $("#backgroundPopup").fadeIn("slow");
-        $("#popupSelect").fadeIn("slow");
+        $("#popup_id").fadeIn("slow");
         popupStatus = 1;
     }
 }
@@ -22,9 +22,9 @@ function centerPopup(e){
     var windowWidth = document.documentElement.clientWidth;
     var windowHeight = document.documentElement.clientHeight;
     var popupHeight = $("#popupSelect").height();
-    var popupWidth = $("#popupSelect").width();
+    var popupWidth = $("#popup_id").width();
     //centering
-    $("#popupSelect").css({
+    $("#popup_id").css({
         "position": "absolute",
         "top": (windowHeight-popupHeight)/2,
         "left": (windowWidth-popupWidth)/2
@@ -41,7 +41,7 @@ function disablePopup(){
     //disables popup only if it is enabled
     if(popupStatus==1){
         $("#backgroundPopup").fadeOut("slow");
-        $("#popupSelect").fadeOut("slow");
+        $("#popup_id").fadeOut("slow");
         popupStatus = 0;
     }
 }
@@ -65,7 +65,7 @@ $(document).keypress(function(e){
 $(document).on("click", "a.selectNP", function(e){
     var authorid = $(this).attr('authid');
 //    alert(authorid);
-    $("#popupSelect").load(
+    $("#popup_id").load(
         '/config/npauthor',
         {
             "authorid":authorid,
@@ -101,5 +101,5 @@ $(document).on("click", "a.selectNP", function(e){
 {% endif %}
 <input type="hidden" id="status" />
 <div id="backgroundPopup"></div>
-<div id="popupSelect">xyzabcd</div>
+<div  class="authorPopUp" id="popup_id">xyzabcd</div>
 {%endblock%}

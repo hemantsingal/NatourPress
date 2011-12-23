@@ -18,6 +18,7 @@ $(document).ready(function() {
 <form action="/config/setkarma/" method="POST">{% csrf_token %}
 <table border="1" cellpadding="5" width="100%" ><tr><td width="30%">
 {% if feed_list %}
+    <h2>Blogs</h2>
     <table padding="4">
     
     {% for feed in feed_list %}
@@ -32,8 +33,10 @@ $(document).ready(function() {
 {% endif %}
 </td>
 <td width="30%">
+
 {% if author_list %}
     <table>
+    <h2>Authors</h2>
     {% for author in author_list %}
     <tr><td>{{ author.first_name }} {{ author.last_name}} </td>
     <td id="author{{author.id}}">{{author.karma}}</td><td> <a class="editlink" href="#" varid="author{{author.id}}"/>edit</a></td></tr>
@@ -46,6 +49,7 @@ $(document).ready(function() {
 </td>
 <td width="30%">
 {% if tag_list %}
+    <h2>Categories</h2>
     <table>
     {% for tag in tag_list %}
     <tr><td>{{ tag.name }} </td><td id="tag{{ tag.id }}">{{tag.karma}}</td><td> 

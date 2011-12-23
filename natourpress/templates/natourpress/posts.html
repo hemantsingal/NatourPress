@@ -1,8 +1,12 @@
 {% extends "natourpress/base.html" %}
-{%block title%}Author List{% endblock %}
+{%block title%}Posts List{% endblock %}
 {%block extrahead%}
-<link rel="stylesheet" type="text/css" href="/static/css/style.css" />
+<!-- Skin CSS file -->
+<link rel="stylesheet" type="text/css" href="/static/css/style.css">
+<script type="text/javascript" src="/static/js/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
 <script type="text/javascript" src="/static/js/jquery.min.js"></script>
+<script type="text/javascript" src="/static/js/jquery.effects.core.js"></script>
+<!-- Utility Dependencies -->
 <script type="text/javascript">
 var popupStatus = 0;
 function loadPopup(){
@@ -12,7 +16,7 @@ function loadPopup(){
             "opacity": "0.7"
         });
         $("#backgroundPopup").fadeIn("slow");
-        $("#postSelect").fadeIn("slow");
+        $("#popup_id").fadeIn("slow");
         popupStatus = 1;
     }
 }
@@ -21,10 +25,11 @@ function centerPopup(e){
     //request data for centering
     var windowWidth = document.documentElement.clientWidth;
     var windowHeight = document.documentElement.clientHeight;
-    var popupHeight = $("#postSelect").height();
-    var popupWidth = $("#postSelect").width();
+    var popupHeight = $("#popup_id").height();
+    var popupWidth = $("#popup_id").width();
     //centering
-    $("#postSelect").css({
+  //  alert(popupHeight);
+    $("#popup_id").css({
         "position": "absolute",
         "top": (windowHeight-popupHeight)/2,
         "left": (windowWidth-popupWidth)/2
@@ -34,14 +39,13 @@ function centerPopup(e){
     $("#backgroundPopup").css({
         "height": windowHeight
     });
-    
 }
 
 function disablePopup(){
     //disables popup only if it is enabled
     if(popupStatus==1){
-        $("#backgroundPopup").fadeOut("slow");
-        $("#postSelect").fadeOut("slow");
+        $("#backgroundPopup").fadeOut("200");
+        $("#popup_id").fadeOut("200");
         popupStatus = 0;
     }
 }
@@ -63,16 +67,55 @@ $(document).keypress(function(e){
 });
 
 $(document).on("click", "a.openPost", function(e){
+ //   $( "#popup_id" ).switchClass( "authorPopUp","postPopUp", 100);
+    $( "#popup_id" ).attr('class', 'postPopUp');
     var postid = $(this).attr('postid');
     var action = '/config/post_detail/'+postid;
-//    alert(authorid);
-    $("#postSelect").load(
+    setTimeout(function() {
+    $("#popup_id").load(
+        action,
+        function() {
+            centerPopup(e);
+            loadPopup();
+    });
+    }, 100);
+});
+
+$(document).on("click", "a.openKarma", function(e){
+    $( "#popup_id" ).attr('class', 'karmaPopUp');
+    var postid = $(this).attr('postid');
+    var action = '/config/open_karma/'+postid;
+    $("#popup_id").load(
         action,
         function() {
             centerPopup(e);
             loadPopup();
     });
 });
+
+
+$(document).on("click", "a.selectNP", function(e){
+    disablePopup();
+    var authid = $(this).attr("authid");
+    //alert("hi");
+   // $( "#popup_id" ).switchClass( "postPopUp", "authorPopUp",100);
+    $( "#popup_id" ).attr('class', 'authorPopUp');
+    setTimeout(function() {
+       // alert($("#popup_id").height());
+        
+        $( "#popup_id" ).load(
+            "/config/npauthor",
+            {
+                "authorid":authid,
+                'csrfmiddlewaretoken': '{{ csrf_token }}'
+            },
+            function(){
+                centerPopup(e);
+                loadPopup();    
+        });  
+    }, 600);
+});
+
 </script>
 {%endblock%}
 {%block headline%}Posts{%endblock%}
@@ -82,10 +125,11 @@ $(document).on("click", "a.openPost", function(e){
     {% for feed,postList in post_dict.items %}
 	<h2>{{ feed.name }}</h2>
     <table>
-        {% for post, karma in postList %}
+        {% for post in postList %}
     <tr class={% cycle 'row1' 'row2' %}>    
+    <!-- <td><a href="/config/post_detail/{{ post.id }}" class="openPost123123" postid="{{ post.id }}">{{ post }}</a></td> -->
     <td><a href="#" class="openPost" postid="{{ post.id }}">{{ post }}</a></td>
-    <td> {{karma}}</td></tr>
+    <td><a href="#" class="openKarma" postid="{{ post.id }}">{{post.karma}}</td></tr>
     
     {% endfor%}
     </table>
@@ -96,5 +140,5 @@ $(document).on("click", "a.openPost", function(e){
 {% endif %}
 <input type="hidden" id="status" />
 <div id="backgroundPopup"></div>
-<div id="postSelect">xyzabcd</div>
+<div  class="postPopUp" id="popup_id">xyzabcd</div>
 {%endblock%}

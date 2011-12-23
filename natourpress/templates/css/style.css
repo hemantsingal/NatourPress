@@ -23,13 +23,66 @@
 	border: 1px solid #cecece;
 	z-index: 1;
 }
-
+/*
 #postSelect {
 	display: none;
 	position: fixed;
+	_position: absolute; /* hack for internet explorer 6
+	height: 734px;
+	width: 958px;
+	background: #FFFFFF;
+	border: 2px solid #cecece;
+	z-index: 2;
+	padding: 12px;
+	font-size: 13px;
+}
+*/
+
+#karmaPopup {
+	display: none;
+	position: fixed;
 	_position: absolute; /* hack for internet explorer 6*/
-	height: 534px;
-	width: 858px;
+	height: 334px;
+	width: 358px;
+	background: #FFFFFF;
+	border: 2px solid #cecece;
+	z-index: 2;
+	padding: 12px;
+	font-size: 13px;
+}
+
+.postPopUp {
+	display: none;
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 734px;
+	width: 958px;
+	background: #FFFFFF;
+	border: 2px solid #cecece;
+	z-index: 2;
+	padding: 12px;
+	font-size: 13px;
+}
+
+.authorPopUp {
+	display: none;
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 234px;
+	width: 200px;
+	background: #FFFFFF;
+	border: 2px solid #cecece;
+	z-index: 2;
+	padding: 12px;
+	font-size: 13px;
+}
+
+.karmaPopUp {
+	display: none;
+	position: fixed;
+	_position: absolute; /* hack for internet explorer 6*/
+	height: 234px;
+	width: 200px;
 	background: #FFFFFF;
 	border: 2px solid #cecece;
 	z-index: 2;
