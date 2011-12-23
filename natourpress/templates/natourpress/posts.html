@@ -3,7 +3,7 @@
 {%block extrahead%}
 <!-- Skin CSS file -->
 <link rel="stylesheet" type="text/css" href="/static/css/style.css">
-<script type="text/javascript" src="/static/js/tinymce/jscripts/tiny_mce/tiny_mce.js"></script>
+<script type="text/javascript" src="/static/js/tinymce/jscripts/tiny_mce/tiny_mce_src.js"></script>
 <script type="text/javascript" src="/static/js/jquery.min.js"></script>
 <script type="text/javascript" src="/static/js/jquery.effects.core.js"></script>
 <!-- Utility Dependencies -->
@@ -127,9 +127,8 @@ $(document).on("click", "a.selectNP", function(e){
     <table>
         {% for post in postList %}
     <tr class={% cycle 'row1' 'row2' %}>    
-    <!-- <td><a href="/config/post_detail/{{ post.id }}" class="openPost123123" postid="{{ post.id }}">{{ post }}</a></td> -->
-    <td><a href="#" class="openPost" postid="{{ post.id }}">{{ post }}</a></td>
-    <td><a href="#" class="openKarma" postid="{{ post.id }}">{{post.karma}}</td></tr>
+    <td><a href="javascript:void(null);"; class="openPost" postid="{{ post.id }}">{{ post }}</a></td>
+    <td><a href="javascript:void(null);" class="openKarma" postid="{{ post.id }}">{{post.karma}}</td></tr>
     
     {% endfor%}
     </table>
@@ -140,5 +139,5 @@ $(document).on("click", "a.selectNP", function(e){
 {% endif %}
 <input type="hidden" id="status" />
 <div id="backgroundPopup"></div>
-<div  class="postPopUp" id="popup_id">xyzabcd</div>
+<div  class="postPopUp" id="popup_id">No Content Found</div>
 {%endblock%}

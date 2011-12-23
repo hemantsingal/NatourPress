@@ -38,7 +38,7 @@ def my_login(request):
         if user is not None:
             if user.is_active:
                 login(request, user)
-                return HttpResponseRedirect('/config/feeds')
+                return HttpResponseRedirect('/config/feeds/')
             # Redirect to a success page.
             else:
                 return HttpResponse('Not Found')
@@ -58,7 +58,7 @@ def feedList(request):
 def deleteFeed(request,feed_id):
     feed = Feed.objects.get(id=feed_id)
     feed.delete()
-    return HttpResponseRedirect('/config/feeds')
+    return HttpResponseRedirect('/config/feeds/')
 
 
 @login_required
@@ -86,7 +86,6 @@ def setkarma(request):
         for x,y in request.POST.items():
             p = re.compile('(author|feed|tag)(\d+)')
             m = p.match(x)
-            print x, y, m
             if m == None:
                 continue
             z = m.group(1)
@@ -114,8 +113,6 @@ def setkarma(request):
 
 @login_required
 def newFeed(request):
-#    feed = Feed.objects.get(id=feed_id)
-#    return render_to_response('natourpress/feedDetail.html', {'feed': feed})
     if request.method == 'POST': # If the form has been submitted...
         form = FeedForm(request.POST) # A form bound to the POST data
         if form.is_valid(): # All validation rules pass
@@ -123,7 +120,7 @@ def newFeed(request):
             feed_url = form.cleaned_data['url']
             feed = Feed(name=name,feed_url=feed_url)
             feed.save()
-            return HttpResponseRedirect('/config/feeds') # Redirect after POST
+            return HttpResponseRedirect('/config/feeds/') # Redirect after POST
     else:
         form = FeedForm()
 
@@ -134,14 +131,13 @@ def newFeed(request):
 @login_required
 def feedDetail(request, feed_id):
     feed = Feed.objects.get(id=feed_id)
-#    return render_to_response('natourpress/feedDetail.html', {'feed': feed})
-    if request.method == 'POST': # If the form has been submitted...
-        form = FeedForm(request.POST) # A form bound to the POST data
-        if form.is_valid(): # All validation rules pass
+    if request.method == 'POST': 
+        form = FeedForm(request.POST) 
+        if form.is_valid(): 
             feed.name = form.cleaned_data['name']
             feed.feed_url = form.cleaned_data['url']
             feed.save()
-            return HttpResponseRedirect('/config/feeds') # Redirect after POST
+            return HttpResponseRedirect('/config/feeds/') # Redirect after POST
     else:
         form = FeedForm({'name':feed.name,'url':feed.feed_url})
 
@@ -153,7 +149,6 @@ def feedDetail(request, feed_id):
 @login_required
 def postDetail(request, post_id):
     post = Post.objects.get(id=post_id)
- #   print form
     params = {
         'post':post,
     }
@@ -164,15 +159,9 @@ def postDetail(request, post_id):
 @login_required
 def openKarma(request, post_id):
     post = Post.objects.get(id=post_id)
-    #form = PostForm(instance=post)
- #   print form
     params = {
-     #   'form':form,
         'karma':post.karma,
     }
-
-    #if post.author and post.author.np_author:
-    #    params['np_author'] = post.author.np_author
     return direct_to_template(request,'natourpress/karma.html', params)
 
 @login_required
@@ -183,13 +172,11 @@ def postlist(request):
                 title = y
             if (x == 'description'):
                 description =  y
-        #        print len(y)
             if (x == 'msgpost'):
                 content = y
             if (x == 'postid'):
                 post = Post.objects.get(id=y)
         if post:
-            print post
             post.title = title
             post.description = description
             post.content = content
@@ -203,10 +190,8 @@ def postlist(request):
 
 @login_required
 def npauthorlist(request):
-    print "hi"
     authorid = request.POST.get('authorid','')
-    print authorid
-    npauthorList = NPAuthor.objects.all()
+    npauthorList = NPAuthor.objects.order_by('first_name')
     return direct_to_template(request,'natourpress/npauthor.html', {
         'author_list': npauthorList,
         'authorid': authorid,
@@ -234,7 +219,7 @@ def newnpauthor(request):
 @login_required
 def nptaglist(request):
     tagid = request.POST.get('tagid','')
-    nptagList = NPTag.objects.all()
+    nptagList = NPTag.objects.order_by('name')
     return direct_to_template(request,'natourpress/nptag.html', {
         'tag_list': nptagList, 
         'tagid': tagid

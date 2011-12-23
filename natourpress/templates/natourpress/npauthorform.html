@@ -8,7 +8,7 @@
 <script>
 $("#formSubmit").click(function(){
     $("#status").load(
-        '/config/newnpauthor',
+        '/config/newnpauthor/',
         {
         	first_name:$("#id_first_name").val(),
         	last_name:$("#id_last_name").val(),
@@ -17,7 +17,7 @@ $("#formSubmit").click(function(){
         },
         function() {
             $("#popup_id").load(
-       			 '/config/npauthor',
+       			 '/config/npauthor/',
         		{
                     "authorid":{{ authorid }},
                     'csrfmiddlewaretoken': '{{ csrf_token }}'

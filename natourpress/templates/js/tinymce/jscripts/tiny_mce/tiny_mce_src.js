@@ -11515,7 +11515,7 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 					w = Math.max(parseInt(w) + (o.deltaWidth || 0), 100);
 
 				if (re.test('' + h))
-					h = Math.max(parseInt(h) + (o.deltaHeight || 0), 100);
+					h = Math.max(parseInt(h) + (o.deltaHeight || 0), 50);
 
 				// Render UI
 				o = t.theme.renderUI({
@@ -11548,8 +11548,8 @@ tinymce.create('tinymce.ui.Toolbar:tinymce.ui.Container', {
 			}
 
 			h = (o.iframeHeight || h) + (typeof(h) == 'number' ? (o.deltaHeight || 0) : '');
-			if (h < 100)
-				h = 100;
+			if (h < 50)
+				h = 50;
 
 			t.iframeHTML = s.doctype + '<html><head xmlns="http://www.w3.org/1999/xhtml">';
 

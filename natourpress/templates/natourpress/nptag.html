@@ -1,6 +1,7 @@
 <html><head>
 </head>
 <body>
+<div style="height:220px; overflow:auto;">
 {% if tag_list %}
     <ul>
     {% for tag in tag_list %}
@@ -12,13 +13,13 @@
 {% else %}
     <p>No categories are available are available.</p>
 {% endif %}
-
+</div>
 <a id="addTag" href="#">Add a category</a>
 <script type="text/javascript">
 $(".npTag").click(function(e){
     var nptagid = this.id;
     $("#{{tagid}}").load(
-        '/config/setnptag',
+        '/config/setnptag/',
         {
             "nptagid":nptagid,
             "tagid":{{ tagid }},
@@ -30,7 +31,7 @@ $(".npTag").click(function(e){
     });
 });
 $("#addTag").click(function(){
-    $("#popupSelect").load('/config/newnptag?tagid={{ tagid }}');
+    $("#popupSelect").load('/config/newnptag/?tagid={{ tagid }}');
 });
 </script>
 

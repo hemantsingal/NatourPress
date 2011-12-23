@@ -1,12 +1,13 @@
-<form action="/newnptag/" method="post">
+<form action="/config/newnptag/" method="post">
 <p><label for="id_name">Name:</label> <br/><input id="id_name" type="text" name="name" maxlength="100" /></p><p><label for="id_slug">Slug:</label> <br/><input id="id_slug" type="text" name="slug" maxlength="100" /></p>
+<input id="status" type="hidden"/>
 <input id="formSubmit" type="button" value="Submit" />
 <script>
 $("#formSubmit").click(function(){
 //    alert("hi");
 //    disablePopup();
     $("#status").load(
-        '/config/newnptag',
+        '/config/newnptag/',
         {
         	name:$("#id_name").val(),
         	slug:$("#id_slug").val(),
@@ -14,7 +15,7 @@ $("#formSubmit").click(function(){
         },
         function() {
             $("#popupSelect").load(
-       			 'nptag',
+       			 '/config/nptag/',
         		{
                     "tagid":{{ tagid }},
                     'csrfmiddlewaretoken': '{{ csrf_token }}'

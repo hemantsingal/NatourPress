@@ -24,7 +24,7 @@ $(document).ready(function() {
     
     {% for feed in feed_list %}
     <tr height="35px"><td>{{ feed.name }}</td><td id="feed{{ feed.id }}">{{ feed.karma }} 
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="editlink" href="#" varid="feed{{ feed.id }}">edit</a></td></tr>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="editlink" href="javascript:void(null);" varid="feed{{ feed.id }}">edit</a></td></tr>
     
     {% endfor%}
     </table>
@@ -40,7 +40,7 @@ $(document).ready(function() {
     <h2>Authors</h2>
     {% for author in author_list %}
     <tr height="35px"><td>{{ author.first_name }} {{ author.last_name}} </td>
-    <td id="author{{author.id}}">{{author.karma}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a class="editlink" href="#" varid="author{{author.id}}"/>edit</a></td></tr>
+    <td id="author{{author.id}}">{{author.karma}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a class="editlink" href="javascript:void(null);" varid="author{{author.id}}"/>edit</a></td></tr>
     
     {% endfor%}
     </table>
@@ -54,7 +54,7 @@ $(document).ready(function() {
     <table>
     {% for tag in tag_list %}
     <tr height="35px"><td>{{ tag.name }} </td><td id="tag{{ tag.id }}">{{tag.karma}}
-    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a class="editlink" href="#" varid="tag{{ tag.id }}">edit</a></td></tr>
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a class="editlink" href="javascript:void(null);" varid="tag{{ tag.id }}">edit</a></td></tr>
     
     {% endfor%}
     </table>

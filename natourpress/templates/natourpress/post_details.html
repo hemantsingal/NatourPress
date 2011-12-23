@@ -31,7 +31,7 @@ tinyMCE.init({
 		theme_advanced_toolbar_location : "top",
 		theme_advanced_toolbar_align : "left",
 		editor_selector : "content",
-		height : "400"
+		height : "350"
 });
 </script>
 {%endblock%}
@@ -43,7 +43,7 @@ tinyMCE.init({
 <table>
 <tr id="title_tag"><td>Title</td><td><input size="100" stype="text" 
 	name="title" id="id_title" value="{{post.title}}"/></td></tr>
-<tr><td>Description</td><td><textarea name="description" style="width:100%" id="id_description" class="description"> {{post.description}}</textarea></td></tr>
+<tr><td>Description</td><td><textarea name="description" style="width:100%" id="id_description" height="30px" class="description"> {{post.description}}</textarea></td></tr>
 <tr><td>Author</td><td> {{post.author}} {% if post.author %}
 	|{% if np_author %} 
 	{{ np_author }} <a class="selectNP" authid="{{ post.author.id }}" href="#">(change)</a>

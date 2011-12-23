@@ -3,6 +3,7 @@
 {%block headline%}Blogs{%endblock%}
 {%block main%}
 {% if feed_list %}
+	<br/>
     <table>
     {% for feed in feed_list %}
     <tr class={% cycle 'row1' 'row2' %}>    
@@ -11,7 +12,8 @@
     
     {% endfor%}
     </table>
-    <p class="paginator"><a href="/config/addfeed">Add New Blog</a></p>
+    <br/><br/>
+    <p class="paginator"><a href="/config/addfeed/">Add New Blog</a></p>
 
 {% else %}
     <p>No feeds are available.</p>

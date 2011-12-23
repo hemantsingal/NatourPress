@@ -1,6 +1,7 @@
 <html><head>
 </head>
 <body>
+<div style="height:220px; overflow:auto;">
 {% if author_list %}
     <ul>
     {% for author in author_list %}
@@ -12,13 +13,14 @@
 {% else %}
     <p>No authors found.</p>
 {% endif %}
-
+</div>
 <a id="addAuthor" href="#">Add an author</a>
+<!-- <a id="addAuthor" href="#" style="position:fixed">Add an author</a> -->
 <script type="text/javascript">
 $(".npAuthor").click(function(e){
     var npauthorid = this.id;
     $("#{{authorid}}").load(
-        '/config/setnpauthor',
+        '/config/setnpauthor/',
         {
             "npauthorid":npauthorid,
             "authorid":{{ authorid }},
