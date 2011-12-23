@@ -9,6 +9,15 @@ from django import forms
 from django.views.generic.simple import direct_to_template
 from django.contrib.auth.decorators import login_required
 
+class NPAuthorForm(forms.Form):
+    first_name = forms.CharField(max_length=100)
+    last_name = forms.CharField(max_length=100)
+    email = forms.EmailField()
+
+class NPTagForm(forms.Form):
+    name = forms.CharField(max_length=100)
+    slug = forms.CharField(max_length=100)
+
 class FeedForm(forms.Form):
     name = forms.CharField(max_length=100)
     url = forms.URLField()
@@ -272,15 +281,4 @@ def setnptag(request):
     return HttpResponse("""<li>{!s}  |  {!s} <a class="selectNP" 
             tagid={!r} href="#">(change)</a></li>
             """.format(a,b,int(a.id)))
-
-class NPAuthorForm(forms.Form):
-    first_name = forms.CharField(max_length=100)
-    last_name = forms.CharField(max_length=100)
-    email = forms.EmailField()
-
-
-
-class NPTagForm(forms.Form):
-    name = forms.CharField(max_length=100)
-    slug = forms.CharField(max_length=100)
 

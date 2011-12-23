@@ -1,24 +1,65 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN">
-    <html lang="en"><head></head><body>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en-us" xml:lang="en-us" >
+<head>
+<title>Log in | Django site admin</title>
+<link rel="stylesheet" type="text/css" href="/static/admin/css/base.css" />
+<link rel="stylesheet" type="text/css" href="/static/admin/css/login.css" />
+<!--[if lte IE 7]><link rel="stylesheet" type="text/css" href="/static/admin/css/ie.css" /><![endif]-->
+
+<script type="text/javascript">window.__admin_media_prefix__ = "/static/admin/";</script>
+
+<meta name="robots" content="NONE,NOARCHIVE" />
+</head>
+<body class="login">
+<!-- Container -->
+<div id="container">
+    <!-- Header -->
+    <div id="header">
+        <div id="branding">
+        
+<h1 id="site-name">Administration</h1>
+        </div>
+       
+    </div>
+    <!-- END Header -->
+    
+
+    <!-- Content -->
+    <div id="content" class="colM">
+<div id="content-main">
 {% if form.errors %}
 <p>Your username and password didn't match. Please try again.</p>
 {% endif %}
 {% load url from future %}
-<form method="post" action="{% url 'django.contrib.auth.views.login' %}">
-{% csrf_token %}
-<table>
-<tr>
-    <td>{{ form.username.label_tag }}</td>
-    <td>{{ form.username }}</td>
-</tr>
-<tr>
-    <td>{{ form.password.label_tag }}</td>
-    <td>{{ form.password }}</td>
-</tr>
-</table>
 
-<input type="submit" value="login" />
-<input type="hidden" name="next" value="{{ next }}" />
+<form action="{% url 'django.contrib.auth.views.login' %}" method="post" id="login-form">{% csrf_token %}
+  <div class="form-row">
+    
+    <label for="id_username" class="required">Username:</label> {{ form.username }}
+  </div>
+  <div class="form-row">
+    
+    <label for="id_password" class="required">Password:</label> {{ form.password }}
+    <input type="hidden" name="next" value="{{ next }}" />
+  </div>
+  <div class="submit-row">
+    <label>&nbsp;</label><input type="submit" value="Log in" />
+  </div>
 </form>
 
-</body></html>
+<script type="text/javascript">
+document.getElementById('id_username').focus()
+</script>
+</div>
+
+        
+        <br class="clear" />
+    </div>
+    <!-- END Content -->
+
+    <div id="footer"></div>
+</div>
+<!-- END Container -->
+
+</body>
+</html>

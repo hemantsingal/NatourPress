@@ -1,12 +1,11 @@
 <html><head>
 </head>
 <body>
-{{authorid}}
 {% if author_list %}
     <ul>
     {% for author in author_list %}
 	
-        <li class="npAuthor" id="{{ author.id }}">{{ author.first_name }} {{author.last_name}} </li>
+        <li><a href="#" class="npAuthor" id="{{ author.id }}">{{ author.first_name }} {{author.last_name}} </a></li>
         
     {% endfor %}
     </ul>
@@ -18,7 +17,6 @@
 <script type="text/javascript">
 $(".npAuthor").click(function(e){
     var npauthorid = this.id;
-//    alert(authorid);
     $("#{{authorid}}").load(
         '/config/setnpauthor',
         {
@@ -32,13 +30,7 @@ $(".npAuthor").click(function(e){
 });
 
 $("#addAuthor").click(function(){
-//    alert("hi");
-//    disablePopup();
-    $("#popup_id").load(
-        '/config/newnpauthor?authid={{ authorid }}',function() {
-         
-//            loadPopup();
-        });
+    $("#popup_id").load('/config/newnpauthor?authid={{ authorid }}');
 });
 </script>
 

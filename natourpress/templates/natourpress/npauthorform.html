@@ -1,10 +1,12 @@
 <form action="/config/newnpauthor/" method="post">
-{{ form.as_p }}
+<p><label for="id_first_name">First name:</label><br/> 
+<input id="id_first_name" type="text" name="first_name" maxlength="100" /></p>
+<p><label for="id_last_name">Last name:</label><br/> 
+<input id="id_last_name" type="text" name="last_name" maxlength="100" /></p>
+<p><label for="id_email">Email:</label> <br/><input type="text" name="email" id="id_email" /></p>
 <input id="formSubmit" type="button" value="Submit" />
 <script>
 $("#formSubmit").click(function(){
-//    alert("hi");
-//    disablePopup();
     $("#status").load(
         '/config/newnpauthor',
         {

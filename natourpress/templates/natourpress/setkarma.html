@@ -8,7 +8,8 @@ $(document).ready(function() {
         var varid = $(this).attr('varid');
         var x = $("#"+varid).text();
         x = x.replace(/\s+/,"");
-        $("#"+varid).html("<input name=\""+varid+"\" type=\"text\" value=\""+x+"\"/>");
+        x = x.replace(/edit.*/,"");
+        $("#"+varid).html("<input size=\"15\" name=\""+varid+"\" type=\"text\" value=\""+x+"\"/>");
     });
 });
 </script>
@@ -22,8 +23,8 @@ $(document).ready(function() {
     <table padding="4">
     
     {% for feed in feed_list %}
-    <tr><td>{{ feed.name }}</td><td id="feed{{ feed.id }}">{{ feed.karma }}</td><td>
-    <a class="editlink" href="#" varid="feed{{ feed.id }}">edit</a></td></tr>
+    <tr height="35px"><td>{{ feed.name }}</td><td id="feed{{ feed.id }}">{{ feed.karma }} 
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="editlink" href="#" varid="feed{{ feed.id }}">edit</a></td></tr>
     
     {% endfor%}
     </table>
@@ -38,8 +39,8 @@ $(document).ready(function() {
     <table>
     <h2>Authors</h2>
     {% for author in author_list %}
-    <tr><td>{{ author.first_name }} {{ author.last_name}} </td>
-    <td id="author{{author.id}}">{{author.karma}}</td><td> <a class="editlink" href="#" varid="author{{author.id}}"/>edit</a></td></tr>
+    <tr height="35px"><td>{{ author.first_name }} {{ author.last_name}} </td>
+    <td id="author{{author.id}}">{{author.karma}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a class="editlink" href="#" varid="author{{author.id}}"/>edit</a></td></tr>
     
     {% endfor%}
     </table>
@@ -52,8 +53,8 @@ $(document).ready(function() {
     <h2>Categories</h2>
     <table>
     {% for tag in tag_list %}
-    <tr><td>{{ tag.name }} </td><td id="tag{{ tag.id }}">{{tag.karma}}</td><td> 
-    <a class="editlink" href="#" varid="tag{{ tag.id }}">edit</a></td></tr>
+    <tr height="35px"><td>{{ tag.name }} </td><td id="tag{{ tag.id }}">{{tag.karma}}
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a class="editlink" href="#" varid="tag{{ tag.id }}">edit</a></td></tr>
     
     {% endfor%}
     </table>

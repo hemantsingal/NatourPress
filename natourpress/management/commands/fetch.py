@@ -85,15 +85,12 @@ class SaveEntry:
         comments = self.entry.get('comments', '')
         description = self.entry.get('description','')
         karma = self.feed.karma
-        print self.feed, karma
         if(author and author.np_author):
                 karma = karma + author.np_author.karma
-                print author.np_author, author.np_author.karma
         if(fcat):
             for tcat in fcat:
                 if(tcat.np_tag):
                     karma = karma+tcat.np_tag.karma
-                    print tcat.np_tag, tcat.np_tag.karma
         return (link, title, guid, author, content, 
                 date_modified, fcat, comments,description[0:250],karma)
 

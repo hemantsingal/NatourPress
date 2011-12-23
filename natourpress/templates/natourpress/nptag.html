@@ -5,19 +5,18 @@
     <ul>
     {% for tag in tag_list %}
 	
-        <li class="npTag" id="{{ tag.id }}">{{ tag.name }}  </li>
+        <li><a href="#" class="npTag" id="{{ tag.id }}">{{ tag.name }}</a>  </li>
         
     {% endfor %}
     </ul>
 {% else %}
-    <p>No polls are available.</p>
+    <p>No categories are available are available.</p>
 {% endif %}
 
 <a id="addTag" href="#">Add a category</a>
 <script type="text/javascript">
 $(".npTag").click(function(e){
     var nptagid = this.id;
-//    alert(authorid);
     $("#{{tagid}}").load(
         '/config/setnptag',
         {
@@ -31,12 +30,7 @@ $(".npTag").click(function(e){
     });
 });
 $("#addTag").click(function(){
-//    alert("hi");
-//    disablePopup();
-    $("#popupSelect").load(
-        'newnptag?tagid={{ tagid }}',function() {
-
-        });
+    $("#popupSelect").load('/config/newnptag?tagid={{ tagid }}');
 });
 </script>
 
