@@ -1,0 +1,9 @@
+{% extends "natourpress/base.html" %}
+{%block title%}Edit Cell{% endblock %}
+{%block headline%}Edit Cell{%endblock%}
+{%block main%}
+<form action="/config/cell_detail/{{ cell_id }}/" method="post">{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Submit" />
+</form>
+{%endblock%}

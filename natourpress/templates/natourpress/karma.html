@@ -1,8 +1,19 @@
-<form action="/config/savekarma/" method="POST">
+<form action="/config/open_karma/{{post.id}}/" method="POST">{% csrf_token %}
+<input type="hidden" name="postid" value="{{post.id}}"/>
 <table>
-<tr><td>Current: </td><td> {{karma}}</td></tr>
+{% if initial %}
+<tr><td>Initial: </td><td> {{initial}}</td></tr>
+{% endif %}
+<tr><td>Current: </td><td> {{post.karma}}</td></tr>
 <tr><td>Add/Subtract: </td><td> <input id="change" name="change" type="text"/>
-
 </table>
+{% if loglist %}
+	<ul>
+		{% for log in loglist %}
+		<li> Changed from {{ log.oldkarma }} to {{ log.newkarma }} on {{ log.date }}
+			
+		{% endfor %}
+	</ul>
+{% endif %}
 <input type="submit" value="Save" />    <input type="button" value="cancel" onclick="disablePopup();"/>
 </form>

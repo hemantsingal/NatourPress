@@ -1,0 +1,22 @@
+{% extends "natourpress/base.html" %}
+{%block title%}Layouts{% endblock %}
+{%block headline%}Layouts{%endblock%}
+{%block main%}
+{% if layout_list %}
+	<br/>
+    <table>
+    {% for layout in layout_list %}
+    <tr class={% cycle 'row1' 'row2' %}>    
+    <td><a href="/config/layout_detail/{{ layout.id}}">{{ layout.name }}</a></td><td> {{layout.usage}}
+    </td><td>	<a href="/config/delete_layout/{{ layout.id }}">delete</a></td></tr>
+    
+    {% endfor%}
+    </table>
+    
+
+{% else %}
+    <p>No layouts are available.</p>
+{% endif %}
+<br/><br/>
+    <p class="paginator"><a href="/config/addlayout/">Add New Layout</a></p>
+{% endblock %}

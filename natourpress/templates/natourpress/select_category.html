@@ -1,0 +1,17 @@
+{% load list_tags %}
+<form action="/config/pagemapper/" method="POST">{% csrf_token %}
+<input type="hidden" name="instance" value="{{instance}}"/>
+<input type="hidden" name="instid" value="{{instid}}"/>
+<table>
+{% for sub_list in category_list|columns:"5" %}
+<tr class={% cycle 'row1' 'row2' %}>
+  {% for item in sub_list %}
+    <td>
+    	<input type="checkbox" name="cat{{item}}" value="{{item}}" {% if item in mapped_tags %} checked="true" {% endif %}/> {{item}}
+    </td>
+  {% endfor %}
+</tr>
+{% endfor %}
+</table>
+<input type="submit" value="Submit" />
+</form>

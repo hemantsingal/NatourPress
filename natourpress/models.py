@@ -18,6 +18,47 @@ class Feed(models.Model):
     def __unicode__(self):
         return self.name
 
+class NPTag(models.Model):
+    name = models.CharField(_('name'), max_length=50, unique=True)
+    slug = models.CharField(_('slug'), max_length=100, unique=True)
+    karma = models.IntegerField(_('karma'), blank=True, null=True, default=30)
+    def __unicode__(self):
+        return self.name
+
+class Topic(models.Model):
+    name = models.CharField(_('name'), max_length=50)
+    slug = models.CharField(_('slug'), max_length=250, null=True, blank=True)
+    tags = models.ManyToManyField(NPTag, verbose_name=_('tags'), null=True, blank=True)
+    def __unicode__(self):
+        return self.name
+
+class SubPlace(models.Model):
+    name = models.CharField(_('name'), max_length=50)
+    slug = models.CharField(_('slug'), max_length=250, null=True, blank=True)
+    placename = models.CharField(_('placename'), max_length=50)
+    placeslug = models.CharField(_('placeslug'), max_length=50)
+    tags = models.ManyToManyField(NPTag, verbose_name=_('tags'), null=True, blank=True)
+    def __unicode__(self):
+        return self.name
+
+class Cell(models.Model):
+    name = models.CharField(_('name'), max_length=50)
+    description = models.CharField(_('description'), max_length=250, null=True, blank=True)
+    tags = models.ManyToManyField(NPTag, verbose_name=_('tags'), null=True, blank=True)
+    def __unicode__(self):
+        return self.name
+
+class Layout(models.Model):
+    name = models.CharField(_('name'), max_length=50)
+    usage = models.CharField(_('usage'), max_length=50)
+    template = models.CharField(_('template'), max_length=150)
+    css = models.CharField(_('css'), max_length=150)
+    javascript = models.CharField(_('javascript'), max_length=150)
+    cells = models.ManyToManyField(Cell, verbose_name=_('cells'), null=True, blank=True)
+    def __unicode__(self):
+        return self.name
+
+
 class Atom(models.Model):
     feed = models.ForeignKey(Feed, verbose_name=_('feed'), null=False, blank=False) 
     rel = models.CharField(_('rel'), max_length=50)
@@ -26,21 +67,17 @@ class Update(models.Model):
     feed = models.ForeignKey(Feed, verbose_name=_('feed'), null=False, blank=False)
     update_period = models.CharField(_('update period'),max_length=25)
     update_frequency = models.IntegerField()
+    def __unicode__(self):
+        return self.feed
+
 
 class FeedImage(models.Model):
     feed = models.ForeignKey(Feed, verbose_name=_('feed'), null=False, blank=False)
     image_url = models.URLField('image url', unique=True)
     title = models.CharField(_('title'), max_length=200, blank=True)
     link = models.URLField(_('link'), blank=True)
-
-
-class NPTag(models.Model):
-    name = models.CharField(_('name'), max_length=50, unique=True)
-    slug = models.CharField(_('slug'), max_length=100, unique=True)
-    karma = models.IntegerField(_('karma'), blank=True, null=True, default=30)
     def __unicode__(self):
-        return self.name
-
+        return self.title
 
 class Tag(models.Model):
     name = models.CharField(_('name'), max_length=50, unique=True)
@@ -89,12 +126,16 @@ class Karma_Log(models.Model):
     newkarma = models.IntegerField(_('karma'), blank=False, null=False)
     date = models.DateTimeField(_('date'), null=False, blank=False)
     post = models.ForeignKey(Post, verbose_name=_('post'), null=False, blank=False, db_index=True)
+    def __unicode__(self):
+        return self.post
 
 class Media(models.Model):
     post = models.ForeignKey(Post, verbose_name=_('feed'), null=False, blank=False)
     link = models.URLField(_('link'), )
     medium = models.CharField(max_length=50)
     title = models.CharField(max_length=200)
+    def __unicode__(self):
+        return self.title
 
 class Link(models.Model):
     name = models.CharField(_('name'), max_length=100, unique=True)

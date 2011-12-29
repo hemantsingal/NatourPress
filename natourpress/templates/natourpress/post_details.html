@@ -46,7 +46,7 @@ tinyMCE.init({
 <tr><td>Description</td><td><textarea name="description" style="width:100%" id="id_description" height="30px" class="description"> {{post.description}}</textarea></td></tr>
 <tr><td>Author</td><td> {{post.author}} {% if post.author %}
 	|{% if np_author %} 
-	{{ np_author }} <a class="selectNP" authid="{{ post.author.id }}" href="#">(change)</a>
+	{{ np_author }} <a class="selectNP" authid="{{ post.author.id }}" href="javascript:void(null);">(change)</a>
 	{% else %}
 	<a class="selectNP" authid="{{ post.author.id }}" 
             href="#">select</a>

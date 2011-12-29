@@ -1,0 +1,9 @@
+{% extends "natourpress/base.html" %}
+{%block title%}New Subplace{% endblock %}
+{%block headline%}Add New Subplace{%endblock%}
+{%block main%}
+<form action="/config/addsubplace/" method="post">{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Submit" />
+</form>
+{%endblock%}

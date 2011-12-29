@@ -1,0 +1,9 @@
+{% extends "natourpress/base.html" %}
+{%block title%}Edit Topic{% endblock %}
+{%block headline%}Edit Topic{%endblock%}
+{%block main%}
+<form action="/config/topic_detail/{{ topic_id }}/" method="post">{% csrf_token %}
+{{ form.as_p }}
+<input type="submit" value="Submit" />
+</form>
+{%endblock%}
