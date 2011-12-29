@@ -68,7 +68,7 @@ class Update(models.Model):
     update_period = models.CharField(_('update period'),max_length=25)
     update_frequency = models.IntegerField()
     def __unicode__(self):
-        return self.feed
+        return self.feed.title
 
 
 class FeedImage(models.Model):
@@ -127,7 +127,7 @@ class Karma_Log(models.Model):
     date = models.DateTimeField(_('date'), null=False, blank=False)
     post = models.ForeignKey(Post, verbose_name=_('post'), null=False, blank=False, db_index=True)
     def __unicode__(self):
-        return self.post
+        return self.post.title
 
 class Media(models.Model):
     post = models.ForeignKey(Post, verbose_name=_('feed'), null=False, blank=False)

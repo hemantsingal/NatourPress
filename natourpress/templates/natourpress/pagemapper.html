@@ -117,8 +117,17 @@ $(document).on("click", "a.npCategory", function(e){
     <table>
     {% for topic in topicList %}
     <tr class={% cycle 'row1' 'row2' %}>    
-    <td><a href="/config/topic_detail/{{ topic.id}}">{{ topic.name }}</a></td><td> {{ topic.slug }}
-    </td></tr>
+    <td><a href="/config/topic_detail/{{ topic.id}}">{{ topic.name }}</a></td>
+    {% if topic.tags.all %}
+    <td>
+    {% for tag in topic.tags.all%} 
+    {{ tag }}, 
+    {% endfor%} <a class="npCategory" mapping="subplace" objid="{{ subplace.id }}" href="javascript:void(null);">(change)</a>
+    </td>
+    {% else %}
+    <td><a class="npCategory" href="javascript:void(null);" mapping="subplace" objid="{{ subplace.id }}">select</a></td>
+    {% endif %}
+    </tr>
     
     {% endfor%}
     </table>

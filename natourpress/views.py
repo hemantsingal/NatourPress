@@ -413,7 +413,12 @@ def openKarma(request, post_id):
             post.save()
             return HttpResponseRedirect('/config/posts/')
     p = Post.objects.get(id=post_id)
+    print post_id
+    print "hi1"
+    print p
+    print "hi2"
     loglist = Karma_Log.objects.filter(post=p)
+    print loglist
     params = {
         'post':p,
     }
