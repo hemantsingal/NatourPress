@@ -43,7 +43,7 @@
 	position: fixed;
 	_position: absolute; /* hack for internet explorer 6*/
 	height: 334px;
-	width: 358px;
+	width: 368px;
 	background: #FFFFFF;
 	border: 2px solid #cecece;
 	z-index: 2;
@@ -85,7 +85,7 @@
 	position: fixed;
 	_position: absolute; /* hack for internet explorer 6*/
 	height: 234px;
-	width: 200px;
+	width: 220px;
 	background: #FFFFFF;
 	border: 2px solid #cecece;
 	z-index: 2;
@@ -127,7 +127,7 @@
 	position: fixed;
 	_position: absolute; /* hack for internet explorer 6*/
 	height: 334px;
-	width: 300px;
+	width: 320px;
 	background: #FFFFFF;
 	border: 2px solid #cecece;
 	z-index: 2;

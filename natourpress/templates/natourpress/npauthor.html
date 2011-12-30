@@ -1,7 +1,7 @@
 <html><head>
 </head>
 <body>
-<div style="height:220px; overflow:auto;">
+<div style="height:196px; overflow:auto;">
 {% if author_list %}
     <ul>
     {% for author in author_list %}
@@ -14,7 +14,8 @@
     <p>No authors found.</p>
 {% endif %}
 </div>
-<a id="addAuthor" href="#">Add an author</a>
+<br/>
+<a id="addAuthor" href="#">Add an author</a> <input type="button" style="float:right" value="cancel" onclick="disablePopup();"/>
 <!-- <a id="addAuthor" href="#" style="position:fixed">Add an author</a> -->
 <script type="text/javascript">
 $(".npAuthor").click(function(e){

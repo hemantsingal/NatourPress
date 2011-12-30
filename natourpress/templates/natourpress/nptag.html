@@ -1,7 +1,7 @@
 <html><head>
 </head>
 <body>
-<div style="height:220px; overflow:auto;">
+<div style="height:196px; overflow:auto;">
 {% if tag_list %}
     <ul>
     {% for tag in tag_list %}
@@ -11,10 +11,11 @@
     {% endfor %}
     </ul>
 {% else %}
-    <p>No categories are available are available.</p>
+    <p>No categories are available are available.</p> 
 {% endif %}
 </div>
-<a id="addTag" href="#">Add a category</a>
+<br/>
+<a id="addTag" href="#">Add a category</a> <input type="button" style="float:right" value="cancel" onclick="disablePopup();"/>
 <script type="text/javascript">
 $(".npTag").click(function(e){
     var nptagid = this.id;

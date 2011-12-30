@@ -4,7 +4,7 @@
 <p><label for="id_last_name">Last name:</label><br/> 
 <input id="id_last_name" type="text" name="last_name" maxlength="100" /></p>
 <p><label for="id_email">Email:</label> <br/><input type="text" name="email" id="id_email" /></p>
-<input id="formSubmit" type="button" value="Submit" />
+<input id="formSubmit" type="button" value="Submit" /> <input type="button" style="float:right" value="cancel" onclick="disablePopup();"/>
 <script>
 $("#formSubmit").click(function(){
     $("#status").load(

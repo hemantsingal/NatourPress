@@ -23,7 +23,7 @@ $(document).ready(function() {
     <table padding="4">
     
     {% for feed in feed_list %}
-    <tr height="35px"><td>{{ feed.name }}</td><td id="feed{{ feed.id }}">{{ feed.karma }} 
+    <tr height="35px"><td style="vertical-align:middle">{{ feed.name }}</td><td id="feed{{ feed.id }}" style="vertical-align:middle">{{ feed.karma }} 
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a class="editlink" href="javascript:void(null);" varid="feed{{ feed.id }}">edit</a></td></tr>
     
     {% endfor%}
@@ -39,8 +39,8 @@ $(document).ready(function() {
     <table>
     <h2>Authors</h2>
     {% for author in author_list %}
-    <tr height="35px"><td>{{ author.first_name }} {{ author.last_name}} </td>
-    <td id="author{{author.id}}">{{author.karma}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a class="editlink" href="javascript:void(null);" varid="author{{author.id}}"/>edit</a></td></tr>
+    <tr height="35px"><td style="vertical-align:middle">{{ author.first_name }} {{ author.last_name}} </td>
+    <td id="author{{author.id}}" style="vertical-align:middle">{{author.karma}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a class="editlink" href="javascript:void(null);" varid="author{{author.id}}"/>edit</a></td></tr>
     
     {% endfor%}
     </table>
@@ -53,7 +53,7 @@ $(document).ready(function() {
     <h2>Categories</h2>
     <table>
     {% for tag in tag_list %}
-    <tr height="35px"><td>{{ tag.name }} </td><td id="tag{{ tag.id }}">{{tag.karma}}
+    <tr height="35px"><td style="vertical-align:middle">{{ tag.name }} </td><td id="tag{{ tag.id }}" style="vertical-align:middle">{{tag.karma}}
     &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <a class="editlink" href="javascript:void(null);" varid="tag{{ tag.id }}">edit</a></td></tr>
     
     {% endfor%}
