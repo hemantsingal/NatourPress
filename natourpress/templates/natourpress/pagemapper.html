@@ -63,6 +63,7 @@ $(document).keypress(function(e){
 });
 
 $(document).on("click", "a.npCategory", function(e){
+    $( "#popup_id" ).attr('class', 'selectCatPopUp');
     var objid = $(this).attr('objid');
     var mapping = $(this).attr('mapping');
 //    alert(authorid);
@@ -78,6 +79,34 @@ $(document).on("click", "a.npCategory", function(e){
             loadPopup();
     });
 });
+
+$(document).on("click", "a.newEntity", function(e){
+    $( "#popup_id" ).attr('class', 'entityPopUp');
+    var entity = $(this).attr('entity');
+    var action = '/config/add'+entity+'/';
+//    alert(authorid);
+    $("#popup_id").load(
+        action,
+        function() {
+            centerPopup(e);
+            loadPopup();
+    });
+});
+
+$(document).on("click", "a.editEntity", function(e){
+    $( "#popup_id" ).attr('class', 'entityPopUp');
+    var entity = $(this).attr('entity');
+    var entityid = $(this).attr('entityid');
+    var action = '/config/'+entity+'_detail/'+entityid+'/';
+//    alert(authorid);
+    $("#popup_id").load(
+        action,
+        function() {
+            centerPopup(e);
+            loadPopup();
+    });
+});
+
 </script> 
 {%endblock%}
 {%block headline%}Page Mapper{%endblock%}
@@ -89,12 +118,10 @@ $(document).on("click", "a.npCategory", function(e){
     <table>
     {% for subplace in subplaceList %}
     <tr class={% cycle 'row1' 'row2' %}>    
-    <td><a href="/config/subplace_detail/{{ subplace.id}}">{{ subplace.name }}</a></td>
+    <td><a class="editEntity" entity="subplace" entityid="{{ subplace.id }}" href="javascript:void(null);">{{ subplace.name }}</a></td>
     {% if subplace.tags.all %}
     <td>
-    {% for tag in subplace.tags.all%} 
-    {{ tag }}, 
-    {% endfor%} <a class="npCategory" mapping="subplace" objid="{{ subplace.id }}" href="javascript:void(null);">(change)</a>
+    {{ subplace.tags.all|join:", " }} <a class="npCategory" mapping="subplace" objid="{{ subplace.id }}" href="javascript:void(null);">(change)</a>
     </td>
     {% else %}
     <td><a class="npCategory" href="javascript:void(null);" mapping="subplace" objid="{{ subplace.id }}">select</a></td>
@@ -108,7 +135,7 @@ $(document).on("click", "a.npCategory", function(e){
     <p>No subplaces are available.</p>
 {% endif %}
 <br/><br/>
-    <p class="paginator"><a href="/config/addsubplace/">Add New Subplace</a></p>
+    <p class="paginator"><a class="newEntity" entity="subplace" href="javascript:void(null);">Add New Subplace</a></p>
 <br/><br/>
 
 {% if topicList %}
@@ -117,15 +144,13 @@ $(document).on("click", "a.npCategory", function(e){
     <table>
     {% for topic in topicList %}
     <tr class={% cycle 'row1' 'row2' %}>    
-    <td><a href="/config/topic_detail/{{ topic.id}}">{{ topic.name }}</a></td>
+    <td><a class="editEntity" entity="topic" entityid="{{ topic.id }}" href="javascript:void(null);">{{ topic.name }}</a></td>
     {% if topic.tags.all %}
     <td>
-    {% for tag in topic.tags.all%} 
-    {{ tag }}, 
-    {% endfor%} <a class="npCategory" mapping="subplace" objid="{{ subplace.id }}" href="javascript:void(null);">(change)</a>
+    {{ topic.tags.all|join:", " }} <a class="npCategory" mapping="topic" objid="{{ topic.id }}" href="javascript:void(null);">(change)</a>
     </td>
     {% else %}
-    <td><a class="npCategory" href="javascript:void(null);" mapping="subplace" objid="{{ subplace.id }}">select</a></td>
+    <td><a class="npCategory" href="javascript:void(null);" mapping="topic" objid="{{ topic.id }}">select</a></td>
     {% endif %}
     </tr>
     
@@ -136,7 +161,7 @@ $(document).on("click", "a.npCategory", function(e){
     <p>No topics are available.</p>
 {% endif %}
 <br/><br/>
-    <p class="paginator"><a href="/config/addtopic/">Add New Topic</a></p>
+    <p class="paginator"><a class="newEntity" entity="topic" href="javascript:void(null);" >Add New Topic</a></p>
 <br/><br/>
 
 {% if cellList %}
@@ -145,7 +170,15 @@ $(document).on("click", "a.npCategory", function(e){
     <table>
     {% for cell in cellList %}
     <tr class={% cycle 'row1' 'row2' %}>    
-    <td><a href="/config/cell_detail/{{ cell.id}}">{{ cell.name }}</a></td></tr>
+    <td><a class="editEntity" entity="cell" entityid="{{ cell.id }}" href="javascript:void(null);" >{{ cell.name }}</a></td>
+    {% if cell.tags.all %}
+    <td>
+    {{ cell.tags.all|join:", " }} <a class="npCategory" mapping="cell" objid="{{ cell.id }}" href="javascript:void(null);">(change)</a>
+    </td>
+    {% else %}
+    <td><a class="npCategory" href="javascript:void(null);" mapping="cell" objid="{{ cell.id }}">select</a></td>
+    {% endif %}
+    </tr>
     
     {% endfor%}
     </table>
@@ -154,7 +187,7 @@ $(document).on("click", "a.npCategory", function(e){
     <p>No cells are available.</p>
 {% endif %}
 <br/><br/>
-    <p class="paginator"><a href="/config/addcell/">Add New Cell</a></p>
+    <p class="paginator"><a class="newEntity" entity="cell" href="javascript:void(null);">Add New Cell</a></p>
 <div id="backgroundPopup"></div>
 <div  class="selectCatPopUp" id="popup_id">xyzabcd</div>
 

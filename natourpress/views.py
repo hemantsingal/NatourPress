@@ -179,16 +179,23 @@ def subplaceDetail(request, subplace_id):
 def selectCategory(request):
     categoryList = NPTag.objects.all()
     if request.method == 'POST':
-        print "hi-2"
+        print "hi1"
         for x,y in request.POST.items():
             if x == 'objid':
                 instid = y
             if x == 'mapping':
                 inst = y
-        print "hi-1"
+        print "hi2", inst, instid
         if inst == 'subplace':
             obj = SubPlace.objects.get(id=instid)
-        print "hi"
+        if inst == 'topic':
+            print "hia",instid
+            obj = Topic.objects.get(id=instid)
+        if inst == 'cell':
+            print "hia",instid
+            obj = Cell.objects.get(id=instid)
+
+        print "hi3"
         tags = obj.tags.all()
         print "hi1"
         return direct_to_template(request,'natourpress/select_category.html', {
@@ -216,6 +223,10 @@ def pageMapper(request):
                 instid = y
         if inst == 'subplace':
             obj = SubPlace.objects.get(id=instid)
+        if inst == 'topic':
+            obj = Topic.objects.get(id=instid)
+        if inst == 'cell':
+            obj = Cell.objects.get(id=instid)
         obj.tags.clear()
         print tags
         [obj.tags.add(tcat) for tcat in tags]

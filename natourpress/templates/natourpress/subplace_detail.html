@@ -1,9 +1,14 @@
-{% extends "natourpress/base.html" %}
+{% extends "natourpress/popup.html" %}
 {%block title%}Edit Subplace{% endblock %}
 {%block headline%}Edit Subplace{%endblock%}
 {%block main%}
 <form action="/config/subplace_detail/{{ subplace_id }}/" method="post">{% csrf_token %}
-{{ form.as_p }}
+<table>
+<tr><th><label for="id_name">Name:</label></th><td>{{ form.name }}</td></tr>
+<tr><th><label for="id_slug">Slug:</label></th><td>{{ form.slug }}</td></tr>
+<tr><th><label for="id_placename">Placename:</label></th><td>{{ form.placename }}</td></tr>
+<tr><th><label for="id_placeslug">Placeslug:</label></th><td>{{ form.placeslug }}</td></tr>
+</table>
 <input type="submit" value="Submit" />
 </form>
 {%endblock%}

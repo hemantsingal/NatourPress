@@ -1,4 +1,4 @@
-{% extends "natourpress/base.html" %}
+{% extends "natourpress/popup.html" %}
 
 {%block title%}Blog List{% endblock %}
 {%block extrahead%}
@@ -7,7 +7,10 @@
 {%block headline%}Edit Blog{%endblock%}
 {%block main%}
 <form action="/config/feed_detail/{{ feed_id }}/" method="post">{% csrf_token %}
-{{ form.as_p }}
+<table>
+<tr><th><label for="id_name">Name:</label></th><td>{{ form.name }}</td></tr>
+<tr><th><label for="id_url">Url:</label></th><td>{{ form.url }}</td></tr>
+</table>
 <input type="submit" value="Submit" />
 </form>
 {%endblock%}

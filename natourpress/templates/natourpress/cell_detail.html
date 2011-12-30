@@ -1,9 +1,12 @@
-{% extends "natourpress/base.html" %}
+{% extends "natourpress/popup.html" %}
 {%block title%}Edit Cell{% endblock %}
 {%block headline%}Edit Cell{%endblock%}
 {%block main%}
 <form action="/config/cell_detail/{{ cell_id }}/" method="post">{% csrf_token %}
-{{ form.as_p }}
+<table>
+<tr><th><label for="id_name">Name:</label></th><td>{{ form.name }}</td></tr>
+<tr><th><label for="id_description">Description:</label></th><td>{{ form.description }}</td></tr>
+</table>
 <input type="submit" value="Submit" />
 </form>
 {%endblock%}
