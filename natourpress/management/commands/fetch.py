@@ -4,6 +4,7 @@ from django.core.management.base import BaseCommand
 from natourpress.models import Feed, Atom, Update, FeedImage, Tag, Post, Media, Link, Author, NPAuthor, NPTag
 import feedparser, time, datetime
 import socket
+from django.shortcuts import render_to_response, get_object_or_404
 
 def maketime(ttime):
     return datetime.datetime.fromtimestamp(time.mktime(ttime))
@@ -35,8 +36,9 @@ class SaveEntry:
                     tagname = tagname.strip()
                     if not tagname or tagname == ' ':
                         continue
-                    if not Tag.objects.filter(name=tagname).filter(feed=self.feed):
-                        cobj = Tag(name=tagname,feed=self.feed)
+                    if not Tag.objects.filter(name=tagname) or not Feed.objects.filter(name=self.feed):
+                        pro = get_object_or_404(Feed, name=self.feed)
+                        cobj = Tag(name=tagname,feed_id=pro.id)
                         cobj.save()
                     fcat.append(Tag.objects.get(name=tagname))
         return fcat
@@ -124,9 +126,9 @@ class SaveEntry:
                 # if the feed has no date_modified info, we use the feed
                 # mtime or the current time
                 if self.frep.feed.has_key('modified_parsed'):
-                    date_modified = maketime(self.frp.feed.modified_parsed)
+                    date_modified = maketime(self.frep.feed.modified_parsed)
                 elif self.frep.has_key('modified'):
-                    date_modified = maketime(self.fpf.modified)
+                    date_modified = maketime(self.frep.modified)
                 else:
                     date_modified = datetime.datetime.now()
             tobj = Post(feed=self.feed, title=title, link=link,

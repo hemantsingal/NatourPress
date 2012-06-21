@@ -1,39 +1,65 @@
 <html><head>
 </head>
 <body>
-<div style="height:196px; overflow:auto;">
+<div style="height:496px; overflow:auto;">
+<h2>Select registered author | Register new author</h2>
 {% if author_list %}
-    <ul>
+    <table>
     {% for author in author_list %}
 	
-        <li><a href="#" class="npAuthor" id="{{ author.id }}">{{ author.first_name }} {{author.last_name}} </a></li>
+        <tr>
+            <td><a href="#" class="npAuthor" id="{{ author.id }}">{{ author.first_name }} {{author.last_name}} </a></td>
+            <td><a href="javascript:void(0);">edit</a></td>
+            <td><a href="javascript:void(0);" class="deleteAuthor" id="{{ author.id }}">delete</a></td>
+        </tr>
         
     {% endfor %}
-    </ul>
+    </table>
 {% else %}
     <p>No authors found.</p>
 {% endif %}
 </div>
 <br/>
-<a id="addAuthor" href="#">Add an author</a> <input type="button" style="float:right" value="cancel" onclick="disablePopup();"/>
+<a id="addAuthor" href="javascript:void(null);">Add an author</a> <input type="button" style="float:right" value="cancel" onclick="disablePopup();"/>
 <!-- <a id="addAuthor" href="#" style="position:fixed">Add an author</a> -->
 <script type="text/javascript">
+
 $(".npAuthor").click(function(e){
     var npauthorid = this.id;
-    $("#{{authorid}}").load(
-        '/config/setnpauthor/',
-        {
-            "npauthorid":npauthorid,
-            "authorid":{{ authorid }},
-            'csrfmiddlewaretoken': '{{ csrf_token }}'
-        },
-        function() {
-            disablePopup();
-    });
+    // alert({{authorid}});
+    // $("#{{authorid}}").load('/config/setnpauthor/',
+    //     {
+    //         "npauthorid":npauthorid,
+    //         "authorid":{{ authorid }},
+    //         "csrfmiddlewaretoken": '{{ csrf_token }}'
+    //     },
+    //     function() {
+    //         alert('bhawani');
+    //         disablePopup();
+    // });
+    
+    $.post("/config/setnpauthor/",{npauthorid:npauthorid,authorid:{{ authorid }},csrfmiddlewaretoken: '{{ csrf_token }}'});
+    disablePopup();
+    //window.location.reload();
+
 });
 
 $("#addAuthor").click(function(){
     $("#popup_id").load('/config/newnpauthor?authid={{ authorid }}');
+});
+
+$(document).on("click",".deleteAuthor",function(){
+    // alert("hi");
+    var a = $(this);
+    $.post(
+        '/config/deletenpauthor/',
+        {
+            'authorid': $(this).attr('id'), 
+            'csrfmiddlewaretoken': '{{ csrf_token }}'
+        }, 
+        function(data) {
+            a.closest('tr').hide();
+    });
 });
 </script>
 

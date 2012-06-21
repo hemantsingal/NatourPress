@@ -16,6 +16,6 @@ urlpatterns = patterns('',
     url(r'^config/', include('natourpress.urls')),
     url(r'^admin/', include(admin.site.urls)),
    # url(r'^login', 'natourpress.views.my_login'),
-    url(r'^login', 'django.contrib.auth.views.login',{'template_name': 'natourpress/login.html'}),
-    url(r'^logout', 'natourpress.views.logout_view'),
+    url(r'^login/$', 'django.contrib.auth.views.login',{'template_name': 'natourpress/login.html'}),
+    url(r'^logout/$', 'natourpress.views.logout_view'),
 )

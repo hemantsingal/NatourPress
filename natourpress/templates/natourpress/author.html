@@ -79,21 +79,28 @@ $(document).on("click", "a.selectNP", function(e){
 
 </script>
 {%endblock%}
+
 {%block headline%}Authors{%endblock%}
+
 {%block main%}
+<span>Use this page to register new authors or change their names.</span>
 {% if author_dict %}
     <ul>
     {% for feed,authorList in author_dict.items %}
 	<h2>{{ feed.name }}</h2>
+        <table><tr><th>Incoming Author</th><th>Registered Author</th></tr>
         {% for author in authorList %}
-	{% if author.np_author %}
-        <div id="{{ author.id }}"><li>{{ author.name }}  |  {{ author.np_author }} <a class="selectNP" 
-            authid="{{ author.id }}" href="#">(change)</a></li></div>
-        {% else %}
-        <div id="{{ author.id }}"><li>{{ author.name }}  |  <a class="selectNP" authid="{{ author.id }}" 
-            href="#">select</a></li></div>
-        {% endif %}
-	{% endfor %}
+            <tr id="{{ author.id }}" class="{% cycle 'odd' 'even' %}">
+	        {% if author.np_author %}
+                <td>{{ author.name }}  </td><td>  {{ author.np_author }} <a class="selectNP" 
+                    authid="{{ author.id }}" href="#">(change)</a></td>
+            {% else %}
+                <td>{{ author.name }}  </td><td>  <a class="selectNP" authid="{{ author.id }}" 
+                href="#">select</a></td>
+            {% endif %}
+            </tr>
+	    {% endfor %}
+    </table>
     {% endfor %}
     </ul>
 {% else %}

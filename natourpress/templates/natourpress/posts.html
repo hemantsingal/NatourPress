@@ -94,27 +94,26 @@ $(document).on("click", "a.openKarma", function(e){
 });
 
 
-$(document).on("click", "a.selectNP", function(e){
-    disablePopup();
-    var authid = $(this).attr("authid");
-    //alert("hi");
-   // $( "#popup_id" ).switchClass( "postPopUp", "authorPopUp",100);
-    $( "#popup_id" ).attr('class', 'authorPopUp');
-    setTimeout(function() {
-       // alert($("#popup_id").height());
+// $(document).on("click", "a.selectNP", function(e){
+//     disablePopup();
+//     var authid = $(this).attr("authid");
+//     //alert("hi");
+//    // $( "#popup_id" ).switchClass( "postPopUp", "authorPopUp",100);
+//     $( "#popup_id" ).attr('class', 'authorPopUp');
+//     setTimeout(function() {
+//        // alert($("#popup_id").height());
         
-        $( "#popup_id" ).load(
-            "/config/npauthor",
-            {
-                "authorid":authid,
-                'csrfmiddlewaretoken': '{{ csrf_token }}'
-            },
-            function(){
-                centerPopup(e);
-                loadPopup();    
-        });  
-    }, 600);
-});
+//         $( "#popup_id" ).load(
+//             "/config/npauthor",
+//             {
+//                 "authorid":authid,
+//                 'csrfmiddlewaretoken': '{{ csrf_token }}'
+//             },
+//             function(){
+//                 loadPopup();    
+//         });  
+//     }, 600);
+// });
 
 </script>
 {%endblock%}
@@ -127,7 +126,7 @@ $(document).on("click", "a.selectNP", function(e){
     <table>
         {% for post in postList %}
     <tr class={% cycle 'row1' 'row2' %}>    
-    <td><a href="javascript:void(null);"; class="openPost" postid="{{ post.id }}">{{ post }}</a></td>
+    <td><a href="javascript:void(null);" class="openPost" postid="{{ post.id }}">{{ post }}</a></td>
     <td><a href="javascript:void(null);" class="openKarma" postid="{{ post.id }}">{{post.karma}}</td></tr>
     
     {% endfor%}
@@ -140,4 +139,5 @@ $(document).on("click", "a.selectNP", function(e){
 <input type="hidden" id="status" />
 <div id="backgroundPopup"></div>
 <div  class="postPopUp" id="popup_id">No Content Found</div>
+<div id="testing"></div>
 {%endblock%}

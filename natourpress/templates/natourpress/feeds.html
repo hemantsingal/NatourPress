@@ -95,10 +95,12 @@ $(document).on("click", "a.editFeed", function(e){
 {%block main%}
 {% if feed_list %}
 	<br/>
+    <h4>List of collected blog feeds. Enter a new blog feed if you want to add it to the list</h4>
+    </br>
     <table>
     {% for feed in feed_list %}
     <tr class={% cycle 'row1' 'row2' %}>    
-    <td><a class="editFeed" feedid="{{ feed.id }}" href="javascript:void(null);">{{ feed.name }}</a></td><td> {{feed.feed_url}}
+    <td><a class="editFeed" feedid="{{ feed.id }}" href="javascript:void(null);">{{ feed.name }}</a></td><td id="feedurl"> {{feed.feed_url}}
     </td><td>	<a href="/config/delete_feed/{{ feed.id }}">delete</a></td></tr>
     
     {% endfor%}
@@ -110,6 +112,7 @@ $(document).on("click", "a.editFeed", function(e){
 <br/><br/>
     <p class="paginator"><a class="newFeed" href="javascript:void(null);">Add New Blog</a></p>
     <div id="backgroundPopup"></div>
+    <div><a href="../feed">Fetch Feeds</a></div>
 <div  class="feedPopUp" id="popup_id">xyzabcd</div>
 
 {% endblock %}

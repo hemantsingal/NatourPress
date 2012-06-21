@@ -1,4 +1,5 @@
-import re, datetime
+import re, datetime,time
+import subprocess
 from django.template import Context, loader, RequestContext
 from natourpress.models import *
 from django.shortcuts import render_to_response, get_object_or_404
@@ -127,7 +128,7 @@ def authorlist(request):
     authorDict = {}
     feedList = Feed.objects.all()
     for a in feedList:
-        authorList = Author.objects.filter(feed=a)
+        authorList = Author.objects.filter(feed=a).order_by('name')
         authorDict[a] = authorList
     return direct_to_template(request,'natourpress/author.html', {'author_dict': authorDict})
 
@@ -160,6 +161,18 @@ def newnpauthor(request):
     })
 
 @login_required
+def editnpauthor(request):
+    if request.method == 'POST':
+        authorid = request.POST.get('authorid','')
+        form = NPAuthorForm(request.POST)
+        if form.is_valid():
+            first_name = form.cleaned_data['first_name']
+            last_name = form.cleaned_data['last_name']
+            email = form.cleaned_data['email']
+
+
+
+@login_required
 def setnpauthor(request):
     authorid = request.POST.get('authorid','')
     npauthorid = request.POST.get('npauthorid','')
@@ -167,10 +180,16 @@ def setnpauthor(request):
     b = NPAuthor.objects.get(id=npauthorid)
     a.np_author = b
     a.save()
-    return HttpResponse("""<li>{!s}  |  {!s} <a class="selectNP" 
-            authid={!r} href="#">(change)</a></li>
+    return HttpResponse("""<td>{!s}  </td><td>  {!s} <a class="selectNP" 
+            authid={!r} href="#">(change)</a></td>
             """.format(a,b,int(a.id)))
 
+@login_required
+def deletenpauthor(request):
+    authorid = request.POST.get('authorid','')
+    a = NPAuthor.objects.get(id=authorid)
+    a.delete()
+    return HttpResponse("deleted")
 
 """Category, NPCategory Views"""
 
@@ -179,7 +198,7 @@ def taglist(request):
     tagDict = {}
     feedList = Feed.objects.all()
     for a in feedList:
-        tagList = Tag.objects.filter(feed=a)
+        tagList = Tag.objects.filter(feed=a).order_by('name')
         tagDict[a] = tagList
     return direct_to_template(request,'natourpress/tag.html', {'tag_dict': tagDict})
 
@@ -268,12 +287,18 @@ def postlist(request):
                 description =  y
             if (x == 'msgpost'):
                 content = y
+            if (x == 'datepicker'):
+                datepicker = y
+            if (x == 'timeval'):
+                timeval = y        
             if (x == 'postid'):
                 post = Post.objects.get(id=y)
         if post:
             post.title = title
             post.description = description
             post.content = content
+            post.date_modified = datepicker + " " + timeval
+            post.flag = 1
             post.save()
     postDict = {}
     feedList = Feed.objects.all()
@@ -285,11 +310,20 @@ def postlist(request):
 @login_required
 def postDetail(request, post_id):
     post = Post.objects.get(id=post_id)
+    time_mod = str(post.date_modified).split(' ')
+    dateval = {'date':time_mod[0],'time':time_mod[1]}
     params = {
         'post':post,
+        'dateval':dateval,
     }
     if post.author and post.author.np_author:
         params['np_author'] = post.author.np_author
+    
+    #date = time.strptime(time_mod[0], '%Y-%m-%d')
+    # time1 = time.strptime(time_mod[1], '%H-%M-%S')
+    # print time.strftime("%H:%M",time1)
+    #print time.strftime("%B %d, %Y",date)
+    #print dateval
     return direct_to_template(request,'natourpress/post_details.html', params)
 
 @login_required
@@ -558,4 +592,11 @@ def test(request):
     x = {1:'red',2:'blue',3:'green'}
     i = random.randint(1,3)
     return render_to_response("natourpress/testing.html",{'color':x[i]})
+
+
+############### Fetch Feeds #####################
+
+def fetchfeed(request):
+    process = subprocess.Popen(['/home/environments/natourpress/bin/python', 'manage.py', 'fetch']) 
+    return HttpResponseRedirect('/config/feeds/')
 

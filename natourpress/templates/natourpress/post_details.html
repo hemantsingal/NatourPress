@@ -2,7 +2,9 @@
 {%block title%}Posts List{% endblock %}
 {%block extrahead%}
 <!-- Skin CSS file -->
-
+<link type="text/css" href="/static/css/jquery-ui-1.8.18.custom.css" rel="stylesheet" />	
+<script type="text/javascript" src="/static/js/jquery.min.js"></script> 
+<script type="text/javascript" src="/static/js/jquery-ui-1.8.18.custom.min.js"></script> 
 <script type="text/javascript">
 tinyMCE.init({
 		// General options
@@ -33,6 +35,24 @@ tinyMCE.init({
 		editor_selector : "content",
 		height : "350"
 });
+
+$(function(){
+    $( "#datepicker" ).datepicker({ dateFormat: "yy-mm-dd" });
+});
+
+$(document).on("click", "a.selectNP", function(e){
+    var authorid = $(this).attr('authid');
+    $("#popup_id").load(
+        '/config/npauthor/',
+        {
+            "authorid":authorid,
+            'csrfmiddlewaretoken': '{{ csrf_token }}'
+        },
+        function() {
+            centerPopup(e);
+            loadPopup();
+    });
+}); 
 </script>
 {%endblock%}
 {% if post %}
@@ -48,18 +68,20 @@ tinyMCE.init({
 	|{% if np_author %} 
 	{{ np_author }} <a class="selectNP" authid="{{ post.author.id }}" href="javascript:void(null);">(change)</a>
 	{% else %}
-	<a class="selectNP" authid="{{ post.author.id }}" 
-            href="#">select</a>
+	<a class="selectNP" authid="{{ post.author.id }}" href="javascript:void(null);">select</a>
 	{% endif %}
 {% endif %}
 </td></tr>
 <tr><td>Categories</td><td>{% for tag in post.tags.all %}
 {{tag}} | {% endfor %}</td></tr>
 <tr><td>Body</td><td><textarea name="msgpost" id="msgpost" style="width:100%" class="content">{{post.content}}</textarea></td></tr> 
-<tr><td>Date</td><td>{{post.date_modified}}</td></tr>
+<tr><td>Date</td><td><input type="text" id="datepicker" name="datepicker" value="{{ dateval.date }}"/>
+<input type="hidden" name="timeval" value="{{ dateval.time }}"/>	
+<label>{{ dateval.time }}</label></td></tr>
 </table>
 <input type="submit" value="Save" />	<input type="button" value="cancel" onclick="disablePopup();"/>
 </form>
+<div  class="authorPopUp" id="popup_id">xyzabcd</div>
 {% endblock %}
 {% else %}
 Unable to fetch post details

@@ -118,6 +118,7 @@ class Post(models.Model):
     pub_date = models.DateField(_('pub_date'), auto_now_add=True)
     description = models.CharField(_('description'), max_length=350)
     karma = models.IntegerField(_('karma'), blank=False, null=False)
+    flag = models.IntegerField(_('flag'), blank=False, null=False, default=0)
     def __unicode__(self):
         return self.title
 
